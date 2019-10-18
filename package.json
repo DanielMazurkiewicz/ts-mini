@@ -13,5 +13,6 @@
   },
   "keywords": [],
   "author": "Daniel Mazurkiewicz <daniel.mazurkiewicz.dm@gmail.com>",
+  "repository": "https://github.com/DanielMazurkiewicz/ts-mini.git",
   "license": "MIT"
 }
