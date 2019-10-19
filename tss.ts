@@ -43,7 +43,7 @@ const compile = runIfInactive(compileCSS, 15);
 
 const replaceChar = (text: string, charToReplace: string, callback: () => string): string => {
     let result = '';
-    let position = 0, i = 0, singleQuote = false, doubleQoute = false;
+    let i = 0, singleQuote = false, doubleQoute = false;
     for (; i < text.length; i++) {
         const char = text[i];
         if (singleQuote) {
@@ -53,16 +53,17 @@ const replaceChar = (text: string, charToReplace: string, callback: () => string
             if (char === '\\') i++
             else if (char === '"') doubleQoute = false;
         } else if (char === charToReplace) {
-            result += text.substring(position, i) + callback();
-            position++
+            result += callback();
+            continue;
         } else if (char === '"') {
             doubleQoute = true;
         } else if (char === "'") {
             singleQuote = true;
         }
+        result += char;
     }
-    // console.log(result + text.substring(position, i))
-    return result + text.substring(position, i);
+
+    return result;
 }
 
 const mediaWrapper = (media: string, content: string) => media ? `@media ${media}{${content}}` : content;
