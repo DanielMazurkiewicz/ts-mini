@@ -54,12 +54,14 @@ const replaceChar = (text: string, charToReplace: string, callback: () => string
             else if (char === '"') doubleQoute = false;
         } else if (char === charToReplace) {
             result += text.substring(position, i) + callback();
+            position++
         } else if (char === '"') {
             doubleQoute = true;
         } else if (char === "'") {
             singleQuote = true;
         }
     }
+    // console.log(result + text.substring(position, i))
     return result + text.substring(position, i);
 }
 
