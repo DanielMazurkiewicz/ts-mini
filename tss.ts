@@ -10,7 +10,7 @@ export interface ITSStyleStrict extends IProperties, IOptions {
 }
 
 export interface ITSStyle extends ITSStyleStrict {
-    [property: string]: string | string[]; // except defined it also accepts undefined properties;
+    [property: string]: string | string[] | undefined; // except defined it also accepts undefined properties;
 }
 
 
@@ -70,6 +70,7 @@ const prepareContent = (style: ITSStyle, checkOptions: Record<string, any> = {})
     const options: Record<string, string | string[]> = {};
     for (let name in style) {
         if (checkOptions[name]) {
+            // @ts-ignore
             options[name] = style[name];
         } else {
             const propName = name.replace(/\_/g, '-');
@@ -196,18 +197,23 @@ export const globalStyles = () => {
 }
 
 export const tss = (styleNameOrStyle?: string | ITSStyle, ...styleList: ITSStyle[]): string => {
-    if (styleNameOrStyle.constructor === String) {
-        return prepareStyle(styleList, <string>styleNameOrStyle)
+    if (styleNameOrStyle) {
+        if (styleNameOrStyle.constructor === String) {
+            return prepareStyle(styleList, <string>styleNameOrStyle)
+        }
+        styleList.unshift(<ITSStyle>styleNameOrStyle);    
     }
-    if (styleNameOrStyle) styleList.unshift(<ITSStyle>styleNameOrStyle);
     return prepareStyle(styleList)
 }
 
 export const tssFrames = (keyframeNameOrStyle?: string | ITSStyle, ...styleList: ITSStyle[]): string => {
-    if (keyframeNameOrStyle.constructor === String) {
-        return prepareFrames(styleList, <string>keyframeNameOrStyle)
+    if (keyframeNameOrStyle) {
+        if (keyframeNameOrStyle.constructor === String) {
+            return prepareFrames(styleList, <string>keyframeNameOrStyle)
+        }
+        styleList.unshift(<ITSStyle>keyframeNameOrStyle);    
     }
-    if (keyframeNameOrStyle) styleList.unshift(<ITSStyle>keyframeNameOrStyle);
+
     return prepareFrames(styleList)
 }
 

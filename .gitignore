@@ -68,3 +68,6 @@ package-lock.json
 
 # test builds
 test/dst/
+
+# yarn lock
+yarn.lock
