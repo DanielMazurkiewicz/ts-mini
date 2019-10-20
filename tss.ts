@@ -19,8 +19,7 @@ let keyframeIndex = 0;
 let styleIndex = 0;
 let styleUrl: string;
 let stylesRuleList: string = '';
-let debounceId: any = -1;
-const styleNamePrefix = '_TSS';
+const styleNamePrefix = '_TSSP';
 const keyframeNamePrefix = '_TSSK';
 
 const styleLink = document.createElement('link');
@@ -30,13 +29,11 @@ document.head.appendChild(styleLink);
 
 
 const compileCSS = () => {
-    console.log(stylesRuleList)
     const blob = new Blob([stylesRuleList], {type: 'text/css'});
     styleLink.href = styleUrl = window.URL.createObjectURL(blob);
     const event = document.createEvent("HTMLEvents");
     event.initEvent("hrefchanged", true, true);
     styleLink.dispatchEvent(event);
-    debounceId = -1;
 }
 
 const compile = runIfInactive(compileCSS, 15);
@@ -147,7 +144,6 @@ const prepareFrames = (tsStyles: ITSStyle[], keyframeName = keyframeNamePrefix +
 
     let result = '';
     for (let media in stylesPerMedia) {
-        console.log(media)
         result += mediaWrapper(media, `@keyframes ${keyframeName}{` + stylesPerMedia[media].map(spm => {
             return `${spm.keySelector}{${spm.content}};`
         }).join('')) + '}'
