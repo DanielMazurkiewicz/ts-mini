@@ -1,6 +1,6 @@
 {
   "name": "ts-mini",
-  "version": "0.0.5",
+  "version": "0.0.6",
   "description": "Pure Typescript framework",
   "devDependencies": {
     "@types/node": "^12.7.7",
@@ -8,6 +8,7 @@
     "typescript": "^3.6.4"
   },
   "scripts": {
+    "bump": "yarn version --patch",
     "build:test": "parcel test/src/index.html --out-dir test/dst/dev",
     "build:test:mini": "parcel build --experimental-scope-hoisting test/src/index.html --out-dir test/dst/dev-mini"
   },
