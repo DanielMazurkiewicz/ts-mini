@@ -428,7 +428,7 @@ export const icheckbox = (options?: IElementOptions) => {
 }
 
 
-const setKeyAndValueOfTsmElement = (el: TsmElement, v: any, k: any, key: string, valueFrom?: string, keyFrom?: string, valueDest?: string) => {
+const setKeyAndValueOfTsmElement = (el: TsmElement, v: any, k: any, keyDest: string, valueFrom?: string, keyFrom?: string, valueDest?: string) => {
     if (valueFrom !== undefined) {
         // @ts-ignore
         el[valueDest] = v[valueFrom]
@@ -438,18 +438,10 @@ const setKeyAndValueOfTsmElement = (el: TsmElement, v: any, k: any, key: string,
     }
 
     if (keyFrom !== undefined) {
-        el.setAttribute(key, v[keyFrom]);
+        el.setAttribute(keyDest, v[keyFrom]);
     } else {
-        el.setAttribute(key, k);
+        el.setAttribute(keyDest, k);
     }
-}
-
-const getKeyOfTsmElement = (el: TsmElement, key: string, asNumber?: boolean): string | number => {
-    const keyName = el.getAttribute(key);
-    if (asNumber) {
-        return parseFloat(<string>keyName);
-    }
-    return <string>keyName;
 }
 
 const getValueOfTsmElement = (el: TsmElement, valueDest = 'ivalue') => {
@@ -465,8 +457,7 @@ export interface IDecoratorOptions {
 }
 export interface IElementOptionsForDecorator extends IElementOptions {
     keyFrom?: string,           // if defined, then instead of using index, a specific object property will be used as key
-    keyDest?: string,           // defines how element keys will be named and visible to DOM
-    keyIsNumeric?: boolean,      
+    keyDest?: string,           // defines how element keys will be named and visible to DOM   
 
     valueFrom?: string,         // if defined, then instead of using directly array value, it uses value from given property
     valueDest?: string,         // property that should be assigned a value
@@ -479,7 +470,7 @@ export const iarray = (decoratorOptions: IDecoratorOptions, options: IElementOpt
     const input = decoratorOptions.rootElement ? decoratorOptions.rootElement() : <TsmElement>createElement('div');
 
     let {decorator, options: decorOptions} = decoratorOptions;
-    let {keyDest, keyFrom, valueFrom, recycle, keyIsNumeric, valueDest, availableAs} = options;
+    let {keyDest, keyFrom, valueFrom, recycle, valueDest, availableAs} = options;
 
     keyDest = keyDest || 'ikey';
     valueDest = valueDest || 'ivalue';
@@ -492,9 +483,7 @@ export const iarray = (decoratorOptions: IDecoratorOptions, options: IElementOpt
         return el;
     }
 
-    // let value: any[] = [];
     assignIValue(input, function(arr: any[]) {
-        // value = arr;
         if (recycle) {
             while (arr.length < input.children.length) {
                 input.removeChild(<Node>input.lastChild);
@@ -517,8 +506,64 @@ export const iarray = (decoratorOptions: IDecoratorOptions, options: IElementOpt
         const result = [];
         const children = input.children;
         for (let i = 0; i < children.length; i++) {
-            // result[getKeyOfTsmElement(<TsmElement>children[i], key, keyIsNumeric)] = getValueOfTsmElement(<TsmElement>children[i], valueDest);
             result[i] = getValueOfTsmElement(<TsmElement>children[i], valueDest);
+        }
+        return result;
+    }, availableAs);
+
+    if (options) setAttributes(input, options);
+    return <TsmIArray>input;
+}
+
+export const irecord = (decoratorOptions: IDecoratorOptions, options: IElementOptionsForDecorator = {}) => {
+    const input = decoratorOptions.rootElement ? decoratorOptions.rootElement() : <TsmElement>createElement('div');
+
+    let {decorator, options: decorOptions} = decoratorOptions;
+    let {keyDest, keyFrom, valueFrom, recycle, valueDest, availableAs} = options;
+
+    keyDest = keyDest || 'ikey';
+    valueDest = valueDest || 'ivalue';
+
+    const getDecoratorElement = (v: any, k: any) => {
+        const el = decorator();
+        if (decorOptions) setAttributes(el, decorOptions);
+        setKeyAndValueOfTsmElement(el, v, k, <string>keyDest, valueFrom, keyFrom, valueDest);
+        return el;
+    }
+
+    assignIValue(input, function(record: Record<any, any>) {
+        if (recycle) {
+            let index = 0;
+            for (let name in record) {
+                if (index >= input.children.length) {
+                    input.appendChild(getDecoratorElement(record[name], name));
+                } else {
+                    setKeyAndValueOfTsmElement(<TsmElement>input.children[index], record[name], name, <string>keyDest, valueFrom, keyFrom);
+                }
+                index++;
+            }
+            while (index < input.children.length) {
+                input.removeChild(<Node>input.lastChild);
+            }
+        } else {
+            removeChildren(input);
+            for (let name in record) {
+                input.appendChild(getDecoratorElement(record[name], name));
+            }
+        }
+    }, function(){
+        const result: Record<any, any> = {};
+        const children = input.children;
+        for (let i = 0; i < children.length; i++) {
+            let key: any;
+            let value = getValueOfTsmElement(<TsmElement>children[i], valueDest);
+            if (keyFrom !== undefined) {
+                key = value[keyFrom];
+            } else {
+                key = children[i].getAttribute(<string>keyDest);
+            }
+
+            result[key] = value;
         }
         return result;
     }, availableAs);
