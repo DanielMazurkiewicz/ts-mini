@@ -8,7 +8,7 @@ import { TsmElement, TsmAnchorElement, TsmAppletElement, TsmAreaElement, TsmAudi
     TsmOptGroupElement, TsmOptionElement, TsmOutputElement, TsmParagraphElement, TsmParamElement, TsmPreElement, 
     TsmProgressElement, TsmScriptElement, TsmSelectElement, TsmSourceElement, TsmSpanElement, TsmStyleElement, 
     TsmTableElement, TsmTableSectionElement, TsmTableDataCellElement, TsmTextAreaElement, TsmTableHeaderCellElement, 
-    TsmTimeElement, TsmTitleElement, TsmTableRowElement, TsmTrackElement, TsmUListElement, TsmVideoElement, TsmSlotElement, TsmCommon, TsmINumber, TsmITel, TsmIEmail, TsmIText, TsmICheckbox, TsmIYyyymmdd, TsmIYyyymm, TsmIHhmm, TsmIArray 
+    TsmTimeElement, TsmTitleElement, TsmTableRowElement, TsmTrackElement, TsmUListElement, TsmVideoElement, TsmSlotElement, TsmCommon, TsmINumber, TsmITel, TsmIEmail, TsmIText, TsmICheckbox, TsmIYyyymmdd, TsmIYyyymm, TsmIHhmm, TsmIArray, TsmIRecord 
 } from './DOM/interfaces';
 
 import { TDate, tDateToString, stringToTDate, TTime, tTimeToString, stringToTTime } from './dateTime';
@@ -569,7 +569,7 @@ export const irecord = (decoratorOptions: IDecoratorOptions, options: IElementOp
     }, availableAs);
 
     if (options) setAttributes(input, options);
-    return <TsmIArray>input;
+    return <TsmIRecord>input;
 }
 
 export const ioption = (options?: IElementOptions) => {
@@ -583,12 +583,21 @@ export const ioption = (options?: IElementOptions) => {
     return input;
 }
 
-export const iselect = (options: IElementOptions = {}) => {
-    const input = iarray({decorator: option, rootElement: select}, Object.assign({keyDest: 'value', valueDest: 'innerText', availableAs: 'ivalues'}, options));
+export interface IElementOptionsForISelect extends IElementOptions {
+    isNumeric?: boolean
+}
+export const iselect = (options: IElementOptionsForISelect = {}, dataManager: (...param: any[]) => TsmIArray | TsmIRecord) => {
+    const input = dataManager({decorator: option, rootElement: select}, Object.assign({keyDest: 'value', valueDest: 'innerText', availableAs: 'ivalues'}, options));
+    const { isNumeric } = options;
     assignIValue(input, function(this: HTMLSelectElement, value: string) {
         this.value = value;
     }, function(this: HTMLSelectElement){
-        return this.value;
+        if (isNumeric) {
+            const result = parseFloat(this.value);
+            if (!isNaN(result)) return result;
+        } else {
+            return this.value;
+        }
     });
     if (options) setAttributes(input, options);
     return input;

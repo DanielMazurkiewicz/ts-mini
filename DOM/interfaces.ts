@@ -34,7 +34,9 @@ export interface TsmIYyyymmdd extends TsmInputElement {
 export interface TsmIArray extends TsmElement {
     ivalue: any
 }
-
+export interface TsmIRecord extends TsmElement {
+    ivalue: any
+}
 export interface TsmElement extends HTMLElement, TsmCommon {}
 
 export interface TsmAnchorElement extends HTMLAnchorElement, TsmCommon {}
