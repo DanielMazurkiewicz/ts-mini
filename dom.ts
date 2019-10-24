@@ -8,7 +8,7 @@ import { TsmElement, TsmAnchorElement, TsmAppletElement, TsmAreaElement, TsmAudi
     TsmOptGroupElement, TsmOptionElement, TsmOutputElement, TsmParagraphElement, TsmParamElement, TsmPreElement, 
     TsmProgressElement, TsmScriptElement, TsmSelectElement, TsmSourceElement, TsmSpanElement, TsmStyleElement, 
     TsmTableElement, TsmTableSectionElement, TsmTableDataCellElement, TsmTextAreaElement, TsmTableHeaderCellElement, 
-    TsmTimeElement, TsmTitleElement, TsmTableRowElement, TsmTrackElement, TsmUListElement, TsmVideoElement, TsmSlotElement, TsmCommon, TsmINumber, TsmITel, TsmIEmail, TsmIText, TsmICheckbox, TsmIYyyymmdd, TsmIYyyymm, TsmIHhmm, TsmIArray, TsmIRecord 
+    TsmTimeElement, TsmTitleElement, TsmTableRowElement, TsmTrackElement, TsmUListElement, TsmVideoElement, TsmSlotElement, TsmCommon, TsmINumber, TsmITel, TsmIEmail, TsmIText, TsmICheckbox, TsmIYyyymmdd, TsmIYyyymm, TsmIHhmm, TsmIArray, TsmIRecord, TsmITextArea 
 } from './DOM/interfaces';
 
 import { TDate, tDateToString, stringToTDate, TTime, tTimeToString, stringToTTime } from './dateTime';
@@ -413,6 +413,18 @@ export const ipassword = (options?: IElementOptions) => {
     return <TsmIText>input;
 }
 
+export const itextarea = (options?: IElementOptions) => {
+    const input = textarea(options);
+
+    assignIValue(input, function(this: HTMLTextAreaElement, value: string) {
+        this.value = value;
+    }, function(this: HTMLTextAreaElement){
+        return this.value;
+    });
+
+    return <TsmITextArea>input;
+}
+
 export const icheckbox = (options?: IElementOptions) => {
     const input = createInputElement('checkbox');
 
@@ -602,6 +614,21 @@ export const iselect = (options: IElementOptionsForISelect = {}, dataManager: (.
     if (options) setAttributes(input, options);
     return input;
 }
+
+export const setIValues = (destinationRecord: any, source: any) => {
+    for (let name in source) {
+        if (destinationRecord[name]) destinationRecord[name].ivalue = source[name];
+    }
+}
+
+export const getIValues = (sourceRecord: any) => {
+    const result: Record<any, any> = {};
+    for (let name in sourceRecord) {
+        result[name] = sourceRecord[name].ivalue;
+    }
+    return result;
+}
+
 
 
 // =====================================================================================================================

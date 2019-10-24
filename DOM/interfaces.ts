@@ -13,6 +13,9 @@ export interface TsmIEmail extends TsmInputElement {
 export interface TsmIText extends TsmInputElement {
     ivalue: string
 }
+export interface TsmITextArea extends TsmTextAreaElement {
+    ivalue: string
+}
 export interface TsmITel extends TsmInputElement {
     ivalue: string
 }
