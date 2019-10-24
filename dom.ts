@@ -523,6 +523,11 @@ export const iarray = (decoratorOptions: IDecoratorOptions, options: IElementOpt
         return result;
     }, availableAs);
 
+    // @ts-ignore
+    input.iadd = (v: any) => {
+        input.appendChild(getDecoratorElement(v, input.children.length));
+    }
+
     if (options) setAttributes(input, options);
     return <TsmIArray>input;
 }
@@ -579,6 +584,11 @@ export const irecord = (decoratorOptions: IDecoratorOptions, options: IElementOp
         }
         return result;
     }, availableAs);
+
+    // @ts-ignore
+    input.iadd = (v: any, k: any) => {
+        input.appendChild(getDecoratorElement(v, k));
+    }
 
     if (options) setAttributes(input, options);
     return <TsmIRecord>input;
