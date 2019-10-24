@@ -35,10 +35,12 @@ export interface TsmIYyyymmdd extends TsmInputElement {
     ivalue: TDate
 }
 export interface TsmIArray extends TsmElement {
-    ivalue: any
+    ivalue: any,
+    iadd: (ivalue: any) => void,
 }
 export interface TsmIRecord extends TsmElement {
     ivalue: any
+    iadd: (ivalue: any, ikey?: any) => void,
 }
 export interface TsmElement extends HTMLElement, TsmCommon {}
 

@@ -586,7 +586,7 @@ export const irecord = (decoratorOptions: IDecoratorOptions, options: IElementOp
     }, availableAs);
 
     // @ts-ignore
-    input.iadd = (v: any, k: any) => {
+    input.iadd = (v: any, k?: any) => {
         input.appendChild(getDecoratorElement(v, k));
     }
 
