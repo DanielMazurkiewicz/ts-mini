@@ -467,6 +467,7 @@ export interface IDecoratorOptions {
     rootElement?: () => TsmElement,
     options?: IElementOptions,
 }
+
 export interface IElementOptionsForDecorator extends IElementOptions {
     keyFrom?: string,           // if defined, then instead of using index, a specific object property will be used as key
     keyDest?: string,           // defines how element keys will be named and visible to DOM   
@@ -478,6 +479,7 @@ export interface IElementOptionsForDecorator extends IElementOptions {
 
     recycle?: boolean,          // reuses existing dom elements to draw new values
 }
+
 export const iarray = (decoratorOptions: IDecoratorOptions, options: IElementOptionsForDecorator = {}) => {
     const input = decoratorOptions.rootElement ? decoratorOptions.rootElement() : <TsmElement>createElement('div');
 
@@ -589,6 +591,85 @@ export const irecord = (decoratorOptions: IDecoratorOptions, options: IElementOp
     input.iadd = (v: any, k?: any) => {
         input.appendChild(getDecoratorElement(v, k));
     }
+
+    if (options) setAttributes(input, options);
+    return <TsmIRecord>input;
+}
+
+export interface IElementOptionsForISwitch extends IElementOptions {
+    keyFrom?: string,           // if defined, then instead of using index, a specific object property will be used as key
+    keyDest?: string,           // defines how element keys will be named and visible to DOM
+    keyIfUnrecognized?: string     // key that will be used when there is no case
+
+    valueApply?: boolean,       // Assign value to element that is currently switched
+
+    valueFrom?: string,         // if defined, then instead of using directly array value, it uses value from given property
+    valueDest?: string,         // property that should be assigned a value
+
+    availableAs?: string,       // defines property name under which all values will be available
+}
+export interface ISwitchCases {
+    [name: string]: (...arg: any[]) => TsmElement | TsmElement;
+}
+export const iswitch = (cases: ISwitchCases, options: IElementOptionsForISwitch = {}, input = <TsmElement>createElement('div')) => {
+
+    let {keyDest, keyFrom, valueApply, valueFrom, keyIfUnrecognized, valueDest, availableAs} = options;
+
+    keyDest = keyDest || 'ikey';
+    valueDest = valueDest || 'ivalue';
+
+    let value: any;
+    let element: TsmElement;
+    assignIValue(input, function(v: any) {
+        value = v;
+        let key;
+        if (keyFrom !== undefined) {
+            key = v[keyFrom];
+        } else {
+            key = v;
+        }
+        input.setAttribute(<string>keyDest, key)
+
+        if (input.lastChild) input.removeChild(input.lastChild);
+
+        let elementCase = cases[v];
+        if (!elementCase && keyIfUnrecognized) elementCase = cases[keyIfUnrecognized];
+
+        if (elementCase) {
+            if (elementCase instanceof Node) {
+                // @ts-ignore
+                element = elementCase;
+                input.appendChild(elementCase)
+            } else if (typeof elementCase === 'function') {
+                input.appendChild(element = elementCase());
+            }
+
+            if (valueApply) {
+                if (valueFrom !== undefined) {
+                    // @ts-ignore
+                    element[valueDest] = v[valueFrom];
+                } else {
+                    // @ts-ignore
+                    element[valueDest] = v;
+                }
+            }
+        }
+    }, function() {
+        if (valueApply) {
+            if (valueFrom !== undefined) {
+                // @ts-ignore
+                return Object.assign({}, value, {[valueFrom]: element[valueDest]});
+            } else {
+                // @ts-ignore
+                return element[valueDest];
+            }
+        }
+        return value;
+    }, availableAs);
+
+    // // @ts-ignore
+    // input.iadd = (v: any, k?: any) => {
+    // }
 
     if (options) setAttributes(input, options);
     return <TsmIRecord>input;
