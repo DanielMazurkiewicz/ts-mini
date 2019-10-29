@@ -29,7 +29,7 @@ const createElement = (tagName: string) => doc.createElement(tagName);
 const createElementWC = (tagName: string, optionsOrChild?: string | Node | TsmElement | IElementOptions, children?: (string | Node)[]):TsmElement => {
     const element = createElement(tagName);
     if (optionsOrChild) {
-        if (optionsOrChild instanceof HTMLElement){
+        if (optionsOrChild instanceof Node){
             element.appendChild(optionsOrChild);
         } else if (optionsOrChild.constructor === String) {
             element.append(<string>optionsOrChild);
