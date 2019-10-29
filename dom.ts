@@ -10,7 +10,7 @@ import { TsmElement, TsmAnchorElement, TsmAppletElement, TsmAreaElement, TsmAudi
     TsmTableElement, TsmTableSectionElement, TsmTableDataCellElement, TsmTextAreaElement, TsmTableHeaderCellElement, 
     TsmTimeElement, TsmTitleElement, TsmTableRowElement, TsmTrackElement, TsmUListElement, TsmVideoElement, TsmSlotElement, 
     TsmCommon, TsmINumber, TsmITel, TsmIEmail, TsmIText, TsmICheckbox, TsmIYyyymmdd, TsmIYyyymm, TsmIHhmm, TsmIArray, 
-    TsmIRecord, TsmITextArea, TsmTextPlaceElement, TsmITextPlace 
+    TsmIRecord, TsmITextArea, TsmTextPlaceElement, TsmITextPlace, TsmIYyyymmddPlace, TsmIYyyymmPlace, TsmIHhmmPlace, TsmINumberPlace 
 } from './DOM/interfaces';
 
 import { TDate, tDateToString, stringToTDate, TTime, tTimeToString, stringToTTime } from './dateTime';
@@ -94,7 +94,7 @@ export const removeChildren = (element: HTMLElement) => {
 // =====================================================================================================================
 
 
-export const open = (constrFun: (...args: any[]) => Node, targetElement: TsmElement, options?: IElementOptions) => {
+export const open = (constrFun: (...args: any[]) => Node, targetElement: HTMLElement, options?: IElementOptions) => {
     const element = constrFun(options);
     targetElement.appendChild(element);
     return element;
@@ -105,12 +105,12 @@ export const close = (element: Node) => {
     element.parentNode.removeChild(element)
 }
 
-export const show = (element: TsmElement) => {
+export const show = (element: HTMLElement) => {
     element.style.display = (<any>element).__displayBackup || '';
     delete (<any>element).__displayBackup;
 }
 
-export const hide = (element: TsmElement) => {
+export const hide = (element: HTMLElement) => {
     (<any>element).__displayBackup = element.style.display;
     element.style.display = 'none'
 }
@@ -217,11 +217,9 @@ const createInputElement = (type: string, pattern?: string) => {
 export const iyyyymmdd = (options?: IElementOptions) => {
     const input = createInputElement('date', wevYMD);
 
-    assignIValue(input, function(value: TDate) {
-        // @ts-ignore
-        this.value = tDateToString(value, true, true);
-    }, function(){
-        // @ts-ignore
+    assignIValue(input, function(this: HTMLInputElement, value: TDate) {
+        this.value = <string>tDateToString(value, true, true);
+    }, function(this: HTMLInputElement){
         return stringToTDate(this.value, true, true);
     });
 
@@ -427,18 +425,6 @@ export const itextarea = (options?: IElementOptions) => {
     if (options) setAttributes(input, options);
 
     return <TsmITextArea>input;
-}
-
-export const itextplace = (text?: string) => {
-    const input = textplace(text);
-
-    assignIValue(input, function(this: Text, value: string) {
-        this.textContent = value;
-    }, function(this: HTMLTextAreaElement){
-        return this.textContent;
-    });
-
-    return <TsmITextPlace>input;
 }
 
 export const icheckbox = (options?: IElementOptions) => {
@@ -736,6 +722,92 @@ export const getIValues = (sourceRecord: any) => {
     return result;
 }
 
+
+// =====================================================================================================================
+
+
+export const itextplace = (options?: IElementOptions) => {
+    const input = textplace();
+
+    let v: string;
+    assignIValue(input, function(this: Text, value: string) {
+        this.textContent = v = value;
+    }, function(){
+        return v;
+    });
+
+    if (options && options.$ && options.$.ivalue !== undefined) input.ivalue = options.$.ivalue;
+
+    return <TsmITextPlace>input;
+}
+export const itextareaplace = itextplace;
+export const itelplace = itextplace;
+export const iemailplace = itextplace;
+
+
+export const iyyyymmddplace = (options?: IElementOptions) => {
+    const input = textplace();
+    let v: TDate;
+    assignIValue(input, function(this: Text, value: TDate) {
+        v = value;
+        this.textContent = tDateToString(value, true, true) || '';
+    }, function() {
+        return v;
+    });
+
+    if (options && options.$ && options.$.ivalue !== undefined) input.ivalue = options.$.ivalue;
+
+    return <TsmIYyyymmddPlace>input;
+}
+
+export const iyyyymmplace = (options?: IElementOptions) => {
+    const input = textplace();
+
+    let v: TDate;
+    assignIValue(input, function(this: Text, value: TDate) {
+        v = value;
+        this.textContent = tDateToString(value, true) || '';
+    }, function() {
+        return v;
+    });
+
+    if (options && options.$ && options.$.ivalue !== undefined) input.ivalue = options.$.ivalue;
+
+    return <TsmIYyyymmPlace>input;
+}
+
+
+export const ihhmmplace = (options?: IElementOptions) => {
+    const input = textplace();
+
+    let v: TTime;
+    assignIValue(input, function(this: Text, value: TTime) {
+        v = value;
+        this.textContent = tTimeToString(value) || '';
+    }, function(){
+        return v;
+    });
+
+    if (options && options.$ && options.$.ivalue !== undefined) input.ivalue = options.$.ivalue;
+
+    return <TsmIHhmmPlace>input;
+}
+
+export const inumberplace = (options?: IElementOptions) => {
+    const input = textplace();
+
+    let v: TTime;
+    assignIValue(input, function(this: Text, value: TTime) {
+        v = value;
+        this.textContent = numberToString(value, decimals) || '';
+    }, function(){
+        return v;
+    });
+    let decimals = (options && (options.decimals !== undefined)) ? options.decimals : -1;
+    if (options && options.$ && options.$.ivalue !== undefined) input.ivalue = options.$.ivalue;
+
+    return <TsmINumberPlace>input;
+}
 
 
 // =====================================================================================================================

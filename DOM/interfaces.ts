@@ -16,9 +16,6 @@ export interface TsmIText extends TsmInputElement {
 export interface TsmITextArea extends TsmTextAreaElement {
     ivalue: string
 }
-export interface TsmITextPlace extends TsmTextPlaceElement {
-    ivalue: string
-}
 export interface TsmITel extends TsmInputElement {
     ivalue: string
 }
@@ -45,9 +42,29 @@ export interface TsmIRecord extends TsmElement {
     ivalue: any
     iadd: (ivalue: any, ikey?: any) => void,
 }
-export interface TsmElement extends HTMLElement, TsmCommon {}
+
+export interface TsmITextPlace extends TsmTextPlaceElement {
+    ivalue: string
+}
+export interface TsmIHhmmPlace extends TsmTextPlaceElement {
+    ivalue: TTime
+}
+export interface TsmIHhmmPlace extends TsmTextPlaceElement {
+    ivalue: TTime
+}
+export interface TsmIYyyymmPlace extends TsmTextPlaceElement {
+    ivalue: TDate
+}
+export interface TsmIYyyymmddPlace extends TsmTextPlaceElement {
+    ivalue: TDate
+}
+export interface TsmINumberPlace extends TsmTextPlaceElement {
+    ivalue: number
+}
 
 export interface TsmTextPlaceElement extends Text, TsmCommon {}
+
+export interface TsmElement extends HTMLElement, TsmCommon {}
 
 export interface TsmAnchorElement extends HTMLAnchorElement, TsmCommon {}
 
