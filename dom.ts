@@ -8,7 +8,9 @@ import { TsmElement, TsmAnchorElement, TsmAppletElement, TsmAreaElement, TsmAudi
     TsmOptGroupElement, TsmOptionElement, TsmOutputElement, TsmParagraphElement, TsmParamElement, TsmPreElement, 
     TsmProgressElement, TsmScriptElement, TsmSelectElement, TsmSourceElement, TsmSpanElement, TsmStyleElement, 
     TsmTableElement, TsmTableSectionElement, TsmTableDataCellElement, TsmTextAreaElement, TsmTableHeaderCellElement, 
-    TsmTimeElement, TsmTitleElement, TsmTableRowElement, TsmTrackElement, TsmUListElement, TsmVideoElement, TsmSlotElement, TsmCommon, TsmINumber, TsmITel, TsmIEmail, TsmIText, TsmICheckbox, TsmIYyyymmdd, TsmIYyyymm, TsmIHhmm, TsmIArray, TsmIRecord, TsmITextArea 
+    TsmTimeElement, TsmTitleElement, TsmTableRowElement, TsmTrackElement, TsmUListElement, TsmVideoElement, TsmSlotElement, 
+    TsmCommon, TsmINumber, TsmITel, TsmIEmail, TsmIText, TsmICheckbox, TsmIYyyymmdd, TsmIYyyymm, TsmIHhmm, TsmIArray, 
+    TsmIRecord, TsmITextArea, TsmTextPlaceElement, TsmITextPlace 
 } from './DOM/interfaces';
 
 import { TDate, tDateToString, stringToTDate, TTime, tTimeToString, stringToTTime } from './dateTime';
@@ -141,7 +143,7 @@ export const onAnyChange = (element: TsmInputElement, callback:(v: any) => any) 
 }
   
 
-export const assignIValue = (element: TsmElement, setter: (v: any) => void, getter: () => any, name = 'ivalue') => {
+export const assignIValue = (element: TsmCommon, setter: (v: any) => void, getter: () => any, name = 'ivalue') => {
     Object.defineProperty(element, name, {
         get: getter,
         set: setter
@@ -422,7 +424,21 @@ export const itextarea = (options?: IElementOptions) => {
         return this.value;
     });
 
+    if (options) setAttributes(input, options);
+
     return <TsmITextArea>input;
+}
+
+export const itextplace = (text?: string) => {
+    const input = textplace(text);
+
+    assignIValue(input, function(this: Text, value: string) {
+        this.textContent = value;
+    }, function(this: HTMLTextAreaElement){
+        return this.textContent;
+    });
+
+    return <TsmITextPlace>input;
 }
 
 export const icheckbox = (options?: IElementOptions) => {
@@ -733,7 +749,7 @@ export const shadow = (t: TsmElement, ...children: (string | Node)[]) => {
     return sh;
 }
 export const body = (...children: (string | Node)[]) => doc.body.append(...children)
-export const text = (txt = '') => doc.createTextNode(txt);
+export const textplace = (txt = '') => <TsmTextPlaceElement>doc.createTextNode(txt);
 
 // =====================================================================================================================
 
