@@ -19,6 +19,15 @@ import { runIfInactive } from './debouncers';
 
 const doc = document;
 
+
+// =====================================================================================================================
+
+let uniqueId = 0;
+export const getUniqueId = () => `_I_${uniqueId++}`
+
+// =====================================================================================================================
+
+
 export interface IElementOptions {
     [property: string]: any
 }
