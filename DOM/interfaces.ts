@@ -1,7 +1,8 @@
 import { TTime, TDate } from "../dateTime";
 
 export interface TsmCommon {
-    ivalue?: any
+    ivalue?: any,
+    checkValidity?: (...arg: any) => any
 }
 
 export interface TsmICheckbox extends TsmInputElement {
