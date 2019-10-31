@@ -717,6 +717,9 @@ export const iselect = (options: IElementOptionsForISelect = {}, dataManager: (.
     return input;
 }
 
+
+// =====================================================================================================================
+
 export const setIValues = (destinationRecord: any, source: any) => {
     for (let name in source) {
         if (destinationRecord[name]) destinationRecord[name].ivalue = source[name];
@@ -730,7 +733,6 @@ export const getIValues = (sourceRecord: any) => {
     }
     return result;
 }
-
 
 // =====================================================================================================================
 
