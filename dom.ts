@@ -43,7 +43,7 @@ const createElementWC = (tagName: string, optionsOrChild?: string | Node | TsmEl
         } else if (optionsOrChild.constructor === String) {
             element.append(<string>optionsOrChild);
         } else {
-            setAttributes(element, <IElementOptions>optionsOrChild);
+            setAttribs(element, <IElementOptions>optionsOrChild);
         }
         // @ts-ignore
         element.append(...children);
@@ -54,7 +54,7 @@ const createElementWC = (tagName: string, optionsOrChild?: string | Node | TsmEl
 
 const createElementWO = (tagName: string, options?: IElementOptions):TsmElement => {
     const element = createElement(tagName);
-    setAttributes(element, options);
+    setAttribs(element, options);
     return element;
 }
 
@@ -68,7 +68,7 @@ export const component = <T>(definition: Function) => {
 }
 export const cpt = component;
 
-export const setAttributes = (element: TsmElement, options?: IElementOptions) => {
+export const setAttribs = (element: HTMLElement, options?: IElementOptions) => {
     if (options) {
         for (let name in options) {
             if (name.startsWith('on')) {
@@ -90,6 +90,11 @@ export const setAttributes = (element: TsmElement, options?: IElementOptions) =>
             }
         }
     }
+}
+
+export const setAttributes = (element: HTMLElement, options?: IElementOptions) => {
+    setAttribs(element, options);
+    return element;
 }
 
 export const removeChildren = (element: HTMLElement) => {
@@ -232,7 +237,7 @@ export const iyyyymmdd = (options?: IElementOptions) => {
         return stringToTDate(this.value, true, true);
     });
 
-    if (options) setAttributes(input, options);
+    if (options) setAttribs(input, options);
 
     const correctValue = runIfInactive(() => {
         const value = stringToTDate(input.value, true, true);
@@ -256,7 +261,7 @@ export const iyyyymm = (options?: IElementOptions) => {
         return stringToTDate(this.value, true);
     });
 
-    if (options) setAttributes(input, options);
+    if (options) setAttribs(input, options);
 
     const correctValue = runIfInactive(() => {
         const value = stringToTDate(input.value, true);
@@ -280,7 +285,7 @@ export const ihhmm = (options?: IElementOptions) => {
         return stringToTTime(this.value);
     });
 
-    if (options) setAttributes(input, options);
+    if (options) setAttribs(input, options);
 
     const correctValue = runIfInactive(() => {
         const value = stringToTTime(input.value);
@@ -323,7 +328,7 @@ export const inumber = (options?: IElementOptions) => {
     }
 
     if (options) {
-        setAttributes(input, options);
+        setAttribs(input, options);
     }
 
     if (decimals <= -1000000) {
@@ -353,7 +358,7 @@ export const itel = (options?: IElementOptions) => {
         return this.value.trim();
     });
 
-    if (options) setAttributes(input, options);
+    if (options) setAttribs(input, options);
 
     const correctValue = runIfInactive(() => {
         input.value = input.value.trim();
@@ -376,7 +381,7 @@ export const iemail = (options?: IElementOptions) => {
         return this.value;
     });
 
-    if (options) setAttributes(input, options);
+    if (options) setAttribs(input, options);
 
     onAnyChange(input, (v) => {
         return wtvRegexEmail.test(v);
@@ -394,7 +399,7 @@ export const itext = (options?: IElementOptions) => {
         return this.value.trim();
     });
 
-    if (options) setAttributes(input, options);
+    if (options) setAttribs(input, options);
 
     const correctValue = runIfInactive(() => {
         input.value = input.value.trim();
@@ -417,7 +422,7 @@ export const ipassword = (options?: IElementOptions) => {
         return this.value;
     });
 
-    if (options) setAttributes(input, options);
+    if (options) setAttribs(input, options);
 
     return <TsmIText>input;
 }
@@ -431,7 +436,7 @@ export const itextarea = (options?: IElementOptions) => {
         return this.value;
     });
 
-    if (options) setAttributes(input, options);
+    if (options) setAttribs(input, options);
 
     return <TsmITextArea>input;
 }
@@ -445,7 +450,7 @@ export const icheckbox = (options?: IElementOptions) => {
         return this.checked;
     });
 
-    if (options) setAttributes(input, options);
+    if (options) setAttribs(input, options);
 
     return <TsmICheckbox>input;
 }
@@ -503,7 +508,7 @@ export const iarray = (decoratorOptions: IDecoratorOptions, options: IElementOpt
 
     const getDecoratorElement = (v: any, k: any) => {
         const el = decorator();
-        if (decorOptions) setAttributes(el, decorOptions);
+        if (decorOptions) setAttribs(el, decorOptions);
         setKeyAndValueOfTsmElement(el, v, k, <string>keyDest, valueFrom, keyFrom, valueDest);
         return el;
     }
@@ -541,7 +546,7 @@ export const iarray = (decoratorOptions: IDecoratorOptions, options: IElementOpt
         input.appendChild(getDecoratorElement(v, input.children.length));
     }
 
-    if (options) setAttributes(input, options);
+    if (options) setAttribs(input, options);
     return <TsmIArray>input;
 }
 
@@ -556,7 +561,7 @@ export const irecord = (decoratorOptions: IDecoratorOptions, options: IElementOp
 
     const getDecoratorElement = (v: any, k: any) => {
         const el = decorator();
-        if (decorOptions) setAttributes(el, decorOptions);
+        if (decorOptions) setAttribs(el, decorOptions);
         setKeyAndValueOfTsmElement(el, v, k, <string>keyDest, valueFrom, keyFrom, valueDest);
         return el;
     }
@@ -603,7 +608,7 @@ export const irecord = (decoratorOptions: IDecoratorOptions, options: IElementOp
         input.appendChild(getDecoratorElement(v, k));
     }
 
-    if (options) setAttributes(input, options);
+    if (options) setAttribs(input, options);
     return <TsmIRecord>input;
 }
 
@@ -682,7 +687,7 @@ export const iswitch = (cases: ISwitchCases, options: IElementOptionsForISwitch 
     // input.iadd = (v: any, k?: any) => {
     // }
 
-    if (options) setAttributes(input, options);
+    if (options) setAttribs(input, options);
     return <TsmIRecord>input;
 }
 
@@ -693,7 +698,7 @@ export const ioption = (options?: IElementOptions) => {
     }, function(this: HTMLOptionElement){
         return this.value;
     });
-    if (options) setAttributes(input, options);
+    if (options) setAttribs(input, options);
     return input;
 }
 
@@ -713,7 +718,7 @@ export const iselect = (options: IElementOptionsForISelect = {}, dataManager: (.
             return this.value;
         }
     });
-    if (options) setAttributes(input, options);
+    if (options) setAttribs(input, options);
     return input;
 }
 
