@@ -9,7 +9,7 @@ import { TsmElement, TsmAnchorElement, TsmAppletElement, TsmAreaElement, TsmAudi
     TsmProgressElement, TsmScriptElement, TsmSelectElement, TsmSourceElement, TsmSpanElement, TsmStyleElement, 
     TsmTableElement, TsmTableSectionElement, TsmTableDataCellElement, TsmTextAreaElement, TsmTableHeaderCellElement, 
     TsmTimeElement, TsmTitleElement, TsmTableRowElement, TsmTrackElement, TsmUListElement, TsmVideoElement, TsmSlotElement, 
-    TsmCommon, TsmINumber, TsmITel, TsmIEmail, TsmIText, TsmICheckbox, TsmIYyyymmdd, TsmIYyyymm, TsmIHhmm, TsmIArray, 
+    TsmINumber, TsmITel, TsmIEmail, TsmIText, TsmICheckbox, TsmIYyyymmdd, TsmIYyyymm, TsmIHhmm, TsmIArray, 
     TsmIRecord, TsmITextArea, TsmTextPlaceElement, TsmITextPlace, TsmIYyyymmddPlace, TsmIYyyymmPlace, TsmIHhmmPlace, TsmINumberPlace 
 } from './DOM/interfaces';
 
@@ -152,7 +152,7 @@ export const onAnyChange = (element: TsmInputElement, callback:(v: any) => any) 
 }
   
 
-export const assignIValue = (element: TsmCommon, setter: (v: any) => void, getter: () => any, name = 'ivalue') => {
+export const assignIValue = (element: any, setter: (v: any) => void, getter: () => any, name = 'ivalue') => {
     Object.defineProperty(element, name, {
         get: getter,
         set: setter
@@ -733,6 +733,16 @@ export const getIValues = (sourceRecord: any) => {
     }
     return result;
 }
+
+export const getInvalidIValues = (sourceRecord: any) => {
+    const result: String[] = [];
+    for (let name in sourceRecord) {
+        if (sourceRecord[name].checkValidity && !sourceRecord[name].checkValidity())
+        result.push(name);
+    }
+    if (result.length) return result;
+}
+
 
 // =====================================================================================================================
 
