@@ -103,7 +103,7 @@ export const removeChildren = (element: HTMLElement) => {
     }
 }
 
-const getChildCausingEvent = (callback: (element: Node | undefined, zones: Node[]) => any) => function(this: Node, evt: Event) {
+export const getChildCausingEvent = (callback: (element: Node | undefined, zones: Node[]) => any) => function(this: Node, evt: Event) {
     let current = <Node>evt.target;
     let previous: Node | undefined = current;
     let result: Node | undefined;
@@ -111,7 +111,7 @@ const getChildCausingEvent = (callback: (element: Node | undefined, zones: Node[
 
     while (this !== (current = <Node>current.parentNode)) {
         // @ts-ignore
-        if (previous.getAttribute && previous.getAttribute('eventszone')) zones.push(previous);
+        if (previous.getAttribute && previous.getAttribute('eventszone')) zones.unshift(previous);
         previous = current;
         result = previous;
     }
