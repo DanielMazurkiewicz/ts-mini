@@ -103,6 +103,21 @@ export const removeChildren = (element: HTMLElement) => {
     }
 }
 
+const getChildCausingEvent = (callback: (element: Node | undefined, zones: Node[]) => any) => function(this: Node, evt: Event) {
+    let current = <Node>evt.target;
+    let previous: Node | undefined = current;
+    let result: Node | undefined;
+    let zones: Node[] = [];
+
+    while (this !== (current = <Node>current.parentNode)) {
+        // @ts-ignore
+        if (previous.getAttribute && previous.getAttribute('eventszone')) zones.push(previous);
+        previous = current;
+        result = previous;
+    }
+    callback(result, zones);
+}
+
 // =====================================================================================================================
 //
 // =====================================================================================================================
@@ -232,7 +247,7 @@ export const iyyyymmdd = (options?: IElementOptions) => {
     const input = createInputElement('date', wevYMD);
 
     assignIValue(input, function(this: HTMLInputElement, value: TDate) {
-        this.value = <string>tDateToString(value, true, true);
+        this.value = tDateToString(value, true, true) || '';
     }, function(this: HTMLInputElement){
         return stringToTDate(this.value, true, true);
     });
@@ -256,7 +271,7 @@ export const iyyyymm = (options?: IElementOptions) => {
     const input = createInputElement('month', wevYM);
 
     assignIValue(input, function(this: HTMLInputElement, value: TDate) {
-        this.value = <string>tDateToString(value, true);
+        this.value = tDateToString(value, true) || '';
     }, function(this: HTMLInputElement) {
         return stringToTDate(this.value, true);
     });
@@ -280,7 +295,7 @@ export const ihhmm = (options?: IElementOptions) => {
     const input = createInputElement('text', wevHM);
 
     assignIValue(input, function(this: HTMLInputElement, value: TTime) {
-        this.value = <string>tTimeToString(value);
+        this.value = <string>tTimeToString(value) || '';
     }, function(this: HTMLInputElement){
         return stringToTTime(this.value);
     });
@@ -304,7 +319,7 @@ export const inumber = (options?: IElementOptions) => {
     const input = createInputElement('text');
 
     assignIValue(input, function(this: HTMLInputElement, value: number) {
-        this.value = numberToString(value, decimals);
+        this.value = numberToString(value, decimals) || '';
     }, function(this: HTMLInputElement){
         return stringToNumber(this.value);
     });
@@ -338,7 +353,7 @@ export const inumber = (options?: IElementOptions) => {
 
     const correctValue = runIfInactive(() => {
         const value = stringToNumber(input.value);
-        if (value !== undefined) input.value = numberToString(value, decimals);
+        if (value !== undefined) input.value = <string>numberToString(value, decimals);
     }, 1000);
 
     onAnyChange(input, (v) => {
@@ -353,7 +368,7 @@ export const itel = (options?: IElementOptions) => {
     const input = createInputElement('tel', wevTel);
 
     assignIValue(input, function(this: HTMLInputElement, value: string) {
-        this.value = value;
+        this.value = value || '';
     }, function(this: HTMLInputElement){
         return this.value.trim();
     });
@@ -376,7 +391,7 @@ export const iemail = (options?: IElementOptions) => {
     const input = createInputElement('email', wevEmail);
 
     assignIValue(input, function(this: HTMLInputElement, value: string) {
-        this.value = value;
+        this.value = value || '';
     }, function(this: HTMLInputElement){
         return this.value;
     });
@@ -394,7 +409,7 @@ export const itext = (options?: IElementOptions) => {
     const input = createInputElement('text', wevText);
 
     assignIValue(input, function(this: HTMLInputElement, value: string) {
-        this.value = value;
+        this.value = value || '';
     }, function(this: HTMLInputElement){
         return this.value.trim();
     });
@@ -417,7 +432,7 @@ export const ipassword = (options?: IElementOptions) => {
     const input = createInputElement('password', wevPassword);
 
     assignIValue(input, function(this: HTMLInputElement, value: string) {
-        this.value = value;
+        this.value = value || '';
     }, function(this: HTMLInputElement){
         return this.value;
     });
@@ -431,7 +446,7 @@ export const itextarea = (options?: IElementOptions) => {
     const input = textarea(options);
 
     assignIValue(input, function(this: HTMLTextAreaElement, value: string) {
-        this.value = value;
+        this.value = value || '';
     }, function(this: HTMLTextAreaElement){
         return this.value;
     });
@@ -694,7 +709,7 @@ export const iswitch = (cases: ISwitchCases, options: IElementOptionsForISwitch 
 export const ioption = (options?: IElementOptions) => {
     const input = option();
     assignIValue(input, function(this: HTMLOptionElement, value: string) {
-        this.value = value;
+        this.value = value || '';
     }, function(this: HTMLOptionElement){
         return this.value;
     });
@@ -726,8 +741,8 @@ export const iselect = (options: IElementOptionsForISelect = {}, dataManager: (.
 // =====================================================================================================================
 
 export const setIValues = (destinationRecord: any, source: any) => {
-    for (let name in source) {
-        if (destinationRecord[name]) destinationRecord[name].ivalue = source[name];
+    for (let name in destinationRecord) {
+        destinationRecord[name].ivalue = source[name];
     }
 }
 
@@ -757,7 +772,8 @@ export const itextplace = (options?: IElementOptions) => {
 
     let v: string;
     assignIValue(input, function(this: Text, value: string) {
-        this.textContent = v = value;
+        v = value;
+        this.textContent = v || '';
     }, function(){
         return v;
     });
