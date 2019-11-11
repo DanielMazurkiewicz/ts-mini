@@ -1,5 +1,6 @@
 export const numberToString = (num: number, decimals = 0, separator = '.'): string | undefined => {
-    if (isNaN(num)) return undefined;
+    // @ts-ignore
+    if (isNaN(num) || typeof num === 'string') return undefined;
     const str = decimals < 0 ? `${num}` : num.toFixed(decimals);
 
     const splitted = str.split('.');
