@@ -755,6 +755,12 @@ export const getIValues = (sourceRecord: any, resultBase: Record<any, any> = {})
     return resultBase;
 }
 
+export const clearIValues = (sourceRecord: any) => {
+    for (let name in sourceRecord) {
+        sourceRecord[name].ivalue = sourceRecord[name].defaultIValue || '';
+    }
+}
+
 export const getInvalidIValues = (sourceRecord: any) => {
     const result: String[] = [];
     for (let name in sourceRecord) {
