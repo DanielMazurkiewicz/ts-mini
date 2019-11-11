@@ -740,18 +740,19 @@ export const iselect = (options: IElementOptionsForISelect = {}, dataManager: (.
 
 // =====================================================================================================================
 
+
 export const setIValues = (destinationRecord: any, source: any) => {
     for (let name in destinationRecord) {
         destinationRecord[name].ivalue = source[name];
     }
+    return source;
 }
 
-export const getIValues = (sourceRecord: any) => {
-    const result: Record<any, any> = {};
+export const getIValues = (sourceRecord: any, resultBase: Record<any, any> = {}) => {
     for (let name in sourceRecord) {
-        result[name] = sourceRecord[name].ivalue;
+        resultBase[name] = sourceRecord[name].ivalue;
     }
-    return result;
+    return resultBase;
 }
 
 export const getInvalidIValues = (sourceRecord: any) => {
