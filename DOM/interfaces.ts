@@ -1,5 +1,8 @@
 import { TTime, TDate } from "../dateTime";
 
+export interface TsmIValueComponentsAny {
+    ivaluecomponents?: any,
+}
 export interface TsmIValueAny {
     ivalue?: any,
 }
@@ -15,8 +18,8 @@ export interface TsmIValueBoolean extends TsmIValueAny{
 export interface TsmICheckValidity {
     checkValidity?: (...arg: any) => any
 }
-export interface TsmCommonBase extends TsmIValueAny {}
-export interface TsmCommonBaseExtended extends TsmIValueAny, TsmICheckValidity {}
+export interface TsmCommonBase extends TsmIValueAny, TsmIValueComponentsAny {}
+export interface TsmCommonBaseExtended extends TsmIValueAny, TsmICheckValidity, TsmIValueComponentsAny {}
 
 
 export interface TsmICheckbox extends TsmInputElement {
