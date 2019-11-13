@@ -240,7 +240,13 @@ const createInputElement = (type: string, pattern?: string) => {
 
     if (pattern) {
         const regex = new RegExp(pattern);
-        input.iIsNotValid = () => regex.test(input.value);
+        input.iIsNotValid = () => {
+            if (input.getAttribute('required')) {
+                if (input.value === '') return 1; 
+            }
+            return regex.test(input.value) || 2;
+
+        }
     }
     return input;
 }
@@ -769,12 +775,7 @@ export const areIValuesNotValid = (sourceRecord: any, callback?: (isNotValid: an
     const result: String[] = [];
     for (let name in sourceRecord) {
         const element = sourceRecord[name];
-        let isNotValid: any;
-        if (element.isNotValid) {
-            isNotValid = element.iIsNotValid();
-        } else {
-            isNotValid = true;
-        }
+        let isNotValid = element.iIsNotValid && element.iIsNotValid();;
 
         if (isNotValid)
             result.push(name);
