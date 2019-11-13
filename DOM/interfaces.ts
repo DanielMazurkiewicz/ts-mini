@@ -84,6 +84,8 @@ export interface TsmINumberPlace extends TsmTextPlaceElement {
 
 export interface TsmTextPlaceElement extends Text, TsmCommonBase {}
 
+export interface TsmNode extends Node, TsmCommonBase {}
+
 export interface TsmElement extends HTMLElement, TsmCommonBase {}
 
 export interface TsmAnchorElement extends HTMLAnchorElement, TsmCommonBase {}

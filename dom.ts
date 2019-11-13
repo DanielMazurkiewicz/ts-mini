@@ -10,7 +10,7 @@ import { TsmElement, TsmAnchorElement, TsmAppletElement, TsmAreaElement, TsmAudi
     TsmTableElement, TsmTableSectionElement, TsmTableDataCellElement, TsmTextAreaElement, TsmTableHeaderCellElement, 
     TsmTimeElement, TsmTitleElement, TsmTableRowElement, TsmTrackElement, TsmUListElement, TsmVideoElement, TsmSlotElement, 
     TsmINumber, TsmITel, TsmIEmail, TsmIText, TsmICheckbox, TsmIYyyymmdd, TsmIYyyymm, TsmIHhmm, TsmIArray, 
-    TsmIRecord, TsmITextArea, TsmTextPlaceElement, TsmITextPlace, TsmIYyyymmddPlace, TsmIYyyymmPlace, TsmIHhmmPlace, TsmINumberPlace 
+    TsmIRecord, TsmITextArea, TsmTextPlaceElement, TsmITextPlace, TsmIYyyymmddPlace, TsmIYyyymmPlace, TsmIHhmmPlace, TsmINumberPlace, TsmNode 
 } from './DOM/interfaces';
 
 import { TDate, tDateToString, stringToTDate, TTime, tTimeToString, stringToTTime } from './dateTime';
@@ -771,7 +771,7 @@ export const clearIValues = (sourceRecord: any) => {
     }
 }
 
-export const areIValuesNotValid = (sourceRecord: any, callback?: (isNotValid: any, name: string, element: Node) => void) => {
+export const areIValuesNotValid = (sourceRecord: any, callback?: (isNotValid: any, name: string, element: TsmElement | TsmNode) => void) => {
     const result: String[] = [];
     for (let name in sourceRecord) {
         const element = sourceRecord[name];
