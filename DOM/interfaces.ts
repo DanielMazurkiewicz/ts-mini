@@ -1,7 +1,8 @@
 import { TTime, TDate } from "../dateTime";
 
-export interface TsmIValueComponentsAny {
-    ivaluecomponents?: any,
+
+export interface TsmIsNotValid {
+    iIsNotValid?: (...args: any) => any
 }
 export interface TsmIValueAny {
     ivalue?: any,
@@ -15,11 +16,8 @@ export interface TsmIValueNumber extends TsmIValueAny{
 export interface TsmIValueBoolean extends TsmIValueAny{
     ivalue: boolean,
 }
-export interface TsmICheckValidity {
-    checkValidity?: (...arg: any) => any
-}
-export interface TsmCommonBase extends TsmIValueAny, TsmIValueComponentsAny {}
-export interface TsmCommonBaseExtended extends TsmIValueAny, TsmICheckValidity, TsmIValueComponentsAny {}
+export interface TsmCommonBase extends TsmIValueAny, TsmIsNotValid {}
+
 
 
 export interface TsmICheckbox extends TsmInputElement {
@@ -61,6 +59,8 @@ export interface TsmIRecord extends TsmElement {
     iadd: (ivalue: any, ikey?: any) => void,
 }
 
+
+
 export interface TsmITextPlace extends TsmTextPlaceElement {
     ivalue: string
 }
@@ -80,132 +80,134 @@ export interface TsmINumberPlace extends TsmTextPlaceElement {
     ivalue: number
 }
 
-export interface TsmTextPlaceElement extends Text, TsmCommonBaseExtended {}
 
-export interface TsmElement extends HTMLElement, TsmCommonBaseExtended {}
 
-export interface TsmAnchorElement extends HTMLAnchorElement, TsmCommonBaseExtended {}
+export interface TsmTextPlaceElement extends Text, TsmCommonBase {}
 
-export interface TsmAppletElement extends HTMLAppletElement, TsmCommonBaseExtended {}
+export interface TsmElement extends HTMLElement, TsmCommonBase {}
 
-export interface TsmAreaElement extends HTMLAreaElement, TsmCommonBaseExtended {}
+export interface TsmAnchorElement extends HTMLAnchorElement, TsmCommonBase {}
 
-export interface TsmAudioElement extends HTMLAudioElement, TsmCommonBaseExtended {}
+export interface TsmAppletElement extends HTMLAppletElement, TsmCommonBase {}
 
-export interface TsmBaseElement extends HTMLBaseElement, TsmCommonBaseExtended {}
+export interface TsmAreaElement extends HTMLAreaElement, TsmCommonBase {}
 
-export interface TsmBaseFontElement extends HTMLBaseFontElement, TsmCommonBaseExtended {}
+export interface TsmAudioElement extends HTMLAudioElement, TsmCommonBase {}
 
-export interface TsmQuoteElement extends HTMLQuoteElement, TsmCommonBaseExtended {}
+export interface TsmBaseElement extends HTMLBaseElement, TsmCommonBase {}
 
-export interface TsmBRElement extends HTMLBRElement, TsmCommonBaseExtended {}
+export interface TsmBaseFontElement extends HTMLBaseFontElement, TsmCommonBase {}
+
+export interface TsmQuoteElement extends HTMLQuoteElement, TsmCommonBase {}
+
+export interface TsmBRElement extends HTMLBRElement, TsmCommonBase {}
 
 export interface TsmButtonElement extends HTMLButtonElement, TsmCommonBase {}
 
-export interface TsmCanvasElement extends HTMLCanvasElement, TsmCommonBaseExtended {}
+export interface TsmCanvasElement extends HTMLCanvasElement, TsmCommonBase {}
 
-export interface TsmTableCaptionElement extends HTMLTableCaptionElement, TsmCommonBaseExtended {}
+export interface TsmTableCaptionElement extends HTMLTableCaptionElement, TsmCommonBase {}
 
-export interface TsmTableColElement extends HTMLTableColElement, TsmCommonBaseExtended {}
+export interface TsmTableColElement extends HTMLTableColElement, TsmCommonBase {}
 
-export interface TsmDataListElement extends HTMLDataListElement, TsmCommonBaseExtended {}
+export interface TsmDataListElement extends HTMLDataListElement, TsmCommonBase {}
 
-export interface TsmModElement extends HTMLModElement, TsmCommonBaseExtended {}
+export interface TsmModElement extends HTMLModElement, TsmCommonBase {}
 
-export interface TsmDetailsElement extends HTMLDetailsElement, TsmCommonBaseExtended {}
+export interface TsmDetailsElement extends HTMLDetailsElement, TsmCommonBase {}
 
-export interface TsmDivElement extends HTMLDivElement, TsmCommonBaseExtended {}
+export interface TsmDivElement extends HTMLDivElement, TsmCommonBase {}
 
-export interface TsmEmbedElement extends HTMLEmbedElement, TsmCommonBaseExtended {}
+export interface TsmEmbedElement extends HTMLEmbedElement, TsmCommonBase {}
 
 export interface TsmFieldSetElement extends HTMLFieldSetElement, TsmCommonBase {}
 
-export interface TsmFontElement extends HTMLFontElement, TsmCommonBaseExtended {}
+export interface TsmFontElement extends HTMLFontElement, TsmCommonBase {}
 
 export interface TsmFormElement extends HTMLFormElement, TsmCommonBase {}
 
-export interface TsmFrameElement extends HTMLFrameElement, TsmCommonBaseExtended {}
+export interface TsmFrameElement extends HTMLFrameElement, TsmCommonBase {}
 
-export interface TsmFrameSetElement extends HTMLFrameSetElement, TsmCommonBaseExtended {}
+export interface TsmFrameSetElement extends HTMLFrameSetElement, TsmCommonBase {}
 
-export interface TsmHeadingElement extends HTMLHeadingElement, TsmCommonBaseExtended {}
+export interface TsmHeadingElement extends HTMLHeadingElement, TsmCommonBase {}
 
-export interface TsmHeadElement extends HTMLHeadElement, TsmCommonBaseExtended {}
+export interface TsmHeadElement extends HTMLHeadElement, TsmCommonBase {}
 
-export interface TsmHRElement extends HTMLHRElement, TsmCommonBaseExtended {}
+export interface TsmHRElement extends HTMLHRElement, TsmCommonBase {}
 
-export interface TsmHtmlElement extends HTMLHtmlElement, TsmCommonBaseExtended {}
+export interface TsmHtmlElement extends HTMLHtmlElement, TsmCommonBase {}
 
-export interface TsmIFrameElement extends HTMLIFrameElement, TsmCommonBaseExtended {}
+export interface TsmIFrameElement extends HTMLIFrameElement, TsmCommonBase {}
 
-export interface TsmImageElement extends HTMLImageElement, TsmCommonBaseExtended {}
+export interface TsmImageElement extends HTMLImageElement, TsmCommonBase {}
 
 export interface TsmInputElement extends HTMLInputElement, TsmCommonBase {}
 
-export interface TsmLabelElement extends HTMLLabelElement, TsmCommonBaseExtended {}
+export interface TsmLabelElement extends HTMLLabelElement, TsmCommonBase {}
 
-export interface TsmLegendElement extends HTMLLegendElement, TsmCommonBaseExtended {}
+export interface TsmLegendElement extends HTMLLegendElement, TsmCommonBase {}
 
-export interface TsmLIElement extends HTMLLIElement, TsmCommonBaseExtended {}
+export interface TsmLIElement extends HTMLLIElement, TsmCommonBase {}
 
-export interface TsmLinkElement extends HTMLLinkElement, TsmCommonBaseExtended {}
+export interface TsmLinkElement extends HTMLLinkElement, TsmCommonBase {}
 
-export interface TsmMapElement extends HTMLMapElement, TsmCommonBaseExtended {}
+export interface TsmMapElement extends HTMLMapElement, TsmCommonBase {}
 
-export interface TsmMenuElement extends HTMLMenuElement, TsmCommonBaseExtended {}
+export interface TsmMenuElement extends HTMLMenuElement, TsmCommonBase {}
 
-export interface TsmMetaElement extends HTMLMetaElement, TsmCommonBaseExtended {}
+export interface TsmMetaElement extends HTMLMetaElement, TsmCommonBase {}
 
-export interface TsmMeterElement extends HTMLMeterElement, TsmCommonBaseExtended {}
+export interface TsmMeterElement extends HTMLMeterElement, TsmCommonBase {}
 
 export interface TsmObjectElement extends HTMLObjectElement, TsmCommonBase {}
 
-export interface TsmOListElement extends HTMLOListElement, TsmCommonBaseExtended {}
+export interface TsmOListElement extends HTMLOListElement, TsmCommonBase {}
 
-export interface TsmOptGroupElement extends HTMLOptGroupElement, TsmCommonBaseExtended {}
+export interface TsmOptGroupElement extends HTMLOptGroupElement, TsmCommonBase {}
 
-export interface TsmOptionElement extends HTMLOptionElement, TsmCommonBaseExtended {}
+export interface TsmOptionElement extends HTMLOptionElement, TsmCommonBase {}
 
 export interface TsmOutputElement extends HTMLOutputElement, TsmCommonBase {}
 
-export interface TsmParagraphElement extends HTMLParagraphElement, TsmCommonBaseExtended {}
+export interface TsmParagraphElement extends HTMLParagraphElement, TsmCommonBase {}
 
-export interface TsmParamElement extends HTMLParamElement, TsmCommonBaseExtended {}
+export interface TsmParamElement extends HTMLParamElement, TsmCommonBase {}
 
-export interface TsmPreElement extends HTMLPreElement, TsmCommonBaseExtended {}
+export interface TsmPreElement extends HTMLPreElement, TsmCommonBase {}
 
-export interface TsmProgressElement extends HTMLProgressElement, TsmCommonBaseExtended {}
+export interface TsmProgressElement extends HTMLProgressElement, TsmCommonBase {}
 
-export interface TsmScriptElement extends HTMLScriptElement, TsmCommonBaseExtended {}
+export interface TsmScriptElement extends HTMLScriptElement, TsmCommonBase {}
 
 export interface TsmSelectElement extends HTMLSelectElement, TsmCommonBase {}
 
-export interface TsmSourceElement extends HTMLSourceElement, TsmCommonBaseExtended {}
+export interface TsmSourceElement extends HTMLSourceElement, TsmCommonBase {}
 
-export interface TsmSpanElement extends HTMLSpanElement, TsmCommonBaseExtended {}
+export interface TsmSpanElement extends HTMLSpanElement, TsmCommonBase {}
 
-export interface TsmStyleElement extends HTMLStyleElement, TsmCommonBaseExtended {}
+export interface TsmStyleElement extends HTMLStyleElement, TsmCommonBase {}
 
-export interface TsmTableElement extends HTMLTableElement, TsmCommonBaseExtended {}
+export interface TsmTableElement extends HTMLTableElement, TsmCommonBase {}
 
-export interface TsmTableSectionElement extends HTMLTableSectionElement, TsmCommonBaseExtended {}
+export interface TsmTableSectionElement extends HTMLTableSectionElement, TsmCommonBase {}
 
-export interface TsmTableDataCellElement extends HTMLTableDataCellElement, TsmCommonBaseExtended {}
+export interface TsmTableDataCellElement extends HTMLTableDataCellElement, TsmCommonBase {}
 
 export interface TsmTextAreaElement extends HTMLTextAreaElement, TsmCommonBase {}
 
-export interface TsmTableHeaderCellElement extends HTMLTableHeaderCellElement, TsmCommonBaseExtended {}
+export interface TsmTableHeaderCellElement extends HTMLTableHeaderCellElement, TsmCommonBase {}
 
-export interface TsmTimeElement extends HTMLTimeElement, TsmCommonBaseExtended {}
+export interface TsmTimeElement extends HTMLTimeElement, TsmCommonBase {}
 
-export interface TsmTitleElement extends HTMLTitleElement, TsmCommonBaseExtended {}
+export interface TsmTitleElement extends HTMLTitleElement, TsmCommonBase {}
 
-export interface TsmTableRowElement extends HTMLTableRowElement, TsmCommonBaseExtended {}
+export interface TsmTableRowElement extends HTMLTableRowElement, TsmCommonBase {}
 
-export interface TsmTrackElement extends HTMLTrackElement, TsmCommonBaseExtended {}
+export interface TsmTrackElement extends HTMLTrackElement, TsmCommonBase {}
 
-export interface TsmUListElement extends HTMLUListElement, TsmCommonBaseExtended {}
+export interface TsmUListElement extends HTMLUListElement, TsmCommonBase {}
 
-export interface TsmVideoElement extends HTMLVideoElement, TsmCommonBaseExtended {}
+export interface TsmVideoElement extends HTMLVideoElement, TsmCommonBase {}
 
-export interface TsmSlotElement extends HTMLSlotElement, TsmCommonBaseExtended {}
+export interface TsmSlotElement extends HTMLSlotElement, TsmCommonBase {}

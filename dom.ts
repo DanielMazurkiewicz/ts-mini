@@ -237,7 +237,11 @@ const getWevNumber = (decimals: number): string => {
 const createInputElement = (type: string, pattern?: string) => {
     const input = <TsmInputElement>createElement('input');
     input.setAttribute('type', type)
-    if (pattern) input.setAttribute('pattern', pattern);
+
+    if (pattern) {
+        const regex = new RegExp(pattern);
+        input.iIsNotValid = () => regex.test(input.value);
+    }
     return input;
 }
 
@@ -761,15 +765,24 @@ export const clearIValues = (sourceRecord: any) => {
     }
 }
 
-export const getInvalidIValues = (sourceRecord: any) => {
+export const areIValuesNotValid = (sourceRecord: any, callback?: (isNotValid: any, name: string, element: Node) => void) => {
     const result: String[] = [];
     for (let name in sourceRecord) {
-        if (sourceRecord[name].checkValidity && !sourceRecord[name].checkValidity())
-        result.push(name);
+        const element = sourceRecord[name];
+        let isNotValid: any;
+        if (element.isNotValid) {
+            isNotValid = element.iIsNotValid();
+        } else {
+            isNotValid = true;
+        }
+
+        if (isNotValid)
+            result.push(name);
+
+        callback && callback(isNotValid, name, element);
     }
     if (result.length) return result;
 }
-
 
 // =====================================================================================================================
 
