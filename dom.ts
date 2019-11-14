@@ -256,10 +256,11 @@ const createInputElement = (type: string, regex?: RegExp) => {
     if (regex) {
         input.iIsNotValid = () => {
             if (isRequired(input)) {
-                if (input.value === '') return 1; 
+                if (input.value === '') return 1;
+                if (!regex.test(input.value)) return 2;
+            } else if (input.value !== '' && !regex.test(input.value)) {
+                return 2;
             }
-            return regex.test(input.value) || 2;
-
         }
     }
     return input;
@@ -359,10 +360,11 @@ export const inumber = (options?: IElementOptions) => {
 
     input.iIsNotValid = () => {
         if (isRequired(input)) {
-            if (input.value === '') return 1; 
+            if (input.value === '') return 1;
+            if (!wevRegexNumber.test(input.value)) return 2;
+        } else if (input.value !== '' && !wevRegexNumber.test(input.value)) {
+            return 2;
         }
-        return wevRegexNumber.test(input.value) || 2;
-
     }
 
     const ao = getAttributesObserver(input);
