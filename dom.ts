@@ -200,16 +200,16 @@ export const getAttributesObserver = (element: HTMLElement) => {
 
 
 // while typing validators
-const wtvRegexYM = /^(\d{0,4}([\-](\d{1,2})?)?)?$/;
-const wtvRegexYMD = /^(\d{1,4}([\-](\d{0,2}([\-](\d{1,2})?)?)?)?)?$/;
-const wtvRegexHM = /^(\d{0,2}([\:](\d{1,2})?)?)?$/;
-const wtvRegexHMS = /^(\d{1,2}([\:](\d{1,2}([\:](\d{1,2})?)?)?)?)?$/;
-const wtvRegexTel = /^([+])?(\d+\s){0,5}(\d*)$/;
-const wtvRegexEmail = /^([\w\-\_]+\.)*(([\w\-\_]+)(@(([\w\-\_]+\.)*([\w\-\_]*))?)?)?$/;
-const wtvRegexText = /^(\S+(\s\S+)*\s?)?$/;
+const wtvRegexYM =      /^(\d{0,4}([\-](\d{1,2})?)?)?$/;
+const wtvRegexYMD =     /^(\d{1,4}([\-](\d{0,2}([\-](\d{1,2})?)?)?)?)?$/;
+const wtvRegexHM =      /^(\d{0,2}([\:](\d{1,2})?)?)?$/;
+const wtvRegexHMS =     /^(\d{1,2}([\:](\d{1,2}([\:](\d{1,2})?)?)?)?)?$/;
+const wtvRegexTel =     /^([+])?(\d+\s){0,5}(\d*)$/;
+const wtvRegexEmail =   /^([\w\-\_]+\.)*(([\w\-\_]+)(@(([\w\-\_]+\.)*([\w\-\_]*))?)?)?$/;
+const wtvRegexText =    /^(\S+(\s\S+)*\s?)?$/;
 
 const wtvRegexInteger = /^([+-]\s?)?(\d+\s)*(\d*)$/;
-const wtvRegexReal = /^([+-]\s?)?(\d+\s)*(\d*)([\.\,](\d*)?)?$/;
+const wtvRegexReal =    /^([+-]\s?)?(\d+\s)*(\d*)([\.\,](\d*)?)?$/;
 const getWtvRegexNumber = (decimals: number): RegExp => {
     if (decimals < 0) return wtvRegexReal;
     if (decimals === 0) return wtvRegexInteger;
@@ -218,30 +218,44 @@ const getWtvRegexNumber = (decimals: number): RegExp => {
 
 
 // when entered validators:
-const wevYM = '\\d{4}-\\d{2}';
-const wevYMD = wevYM + '-\\d{2}';
-const wevHM = '\\d{2}:\\d{2}';
-const wevHMS = wevYM + ':\\d{2}';
-const wevHMSM = wevHMS + '[\.\,]\\d{3}';
-const wevTel = `([+])?(\\d+\\s){0,5}(\\d+)`;
-// const wevEmail = /^([\w\-\_]+\.)*([\w\-\_]+)@{1}([\w\-\_]+\.)+([\w\-\_]{2,})$/
-const wevEmail = `((\\w|[-_])+\\.)*((\\w|[-_])+)@((\\w|[-_])+\\.)+((\\w|[-_]){2,})`;
-const wevText = `\\S+(\\s\\S+)*`;
-const wevPassword = `.{6,}`;
+const wevRegexYM =       /^\d{4}-\d{2}$/;
+const wevRegexYMD =      /^\d{4}-\d{2}-\d{2}$/;
+const wevRegexHM =       /^\d{2}:\d{2}$/;
+const wevRegexHMS =      /^\d{2}:\d{2}:\d{2}$/;
+const wevRegexHMSM =     /^\d{2}:\d{2}:\d{2}[\.\,]\d{3}$/;
+const wevRegexTel =      /^([+])?(\d+\s){0,5}(\d+)$/;
+// const wevRegexEmail =    /^([\w\-\_]+\.)*([\w\-\_]+)@{1}([\w\-\_]+\.)+([\w\-\_]{2,})$/
+const wevRegexEmail =    /^((\w|[-_])+\.)*((\w|[-_])+)@((\w|[-_])+\.)+((\w|[-_]){2,})$/;
+const wevRegexText =     /^\S+(\\s\\S+)*$/;
+const wevRegexPassword = /^.{6,}$/;
 
-const getWevNumber = (decimals: number): string => {
-    if (decimals === 0) return `([+-])?((\\d+\\s)*\\d+)+`
-    return `([+-])?((\\d+\\s)*\\d+)+([\\.,]\\d+)?`
+// // when entered validators:
+// const wevRegexYM = '\\d{4}-\\d{2}';
+// const wevRegexYMD = wevRegexYM + '-\\d{2}';
+// const wevRegexHM = '\\d{2}:\\d{2}';
+// const wevRegexHMS = wevRegexYM + ':\\d{2}';
+// const wevRegexHMSM = wevRegexHMS + '[\.\,]\\d{3}';
+// const wevRegexTel = `([+])?(\\d+\\s){0,5}(\\d+)`;
+// // const wevRegexEmail = /^([\w\-\_]+\.)*([\w\-\_]+)@{1}([\w\-\_]+\.)+([\w\-\_]{2,})$/
+// const wevRegexEmail = `((\\w|[-_])+\\.)*((\\w|[-_])+)@((\\w|[-_])+\\.)+((\\w|[-_]){2,})`;
+// const wevRegexText = `\\S+(\\s\\S+)*`;
+// const wevRegexPassword = `.{6,}`;
+
+const getWevRegexNumber = (decimals: number): RegExp => {
+    if (decimals === 0) return /^([+-])?((\d+\s)*\d+)+$/
+    return /^([+-])?((\d+\s)*\d+)+([\.,]\d+)?$/
 }
 
-const createInputElement = (type: string, pattern?: string) => {
+
+const isRequired = (element: any) => element.irequire || (element.getAttribute && (element.getAttribute('require') || element.getAttribute('required'))) 
+
+const createInputElement = (type: string, regex?: RegExp) => {
     const input = <TsmInputElement>createElement('input');
     input.setAttribute('type', type)
 
-    if (pattern) {
-        const regex = new RegExp(pattern);
+    if (regex) {
         input.iIsNotValid = () => {
-            if (input.getAttribute('required')) {
+            if (isRequired(input)) {
                 if (input.value === '') return 1; 
             }
             return regex.test(input.value) || 2;
@@ -254,7 +268,7 @@ const createInputElement = (type: string, pattern?: string) => {
 // ---------------------------------------------------------------------------------------------------------------------
 
 export const iyyyymmdd = (options?: IElementOptions) => {
-    const input = createInputElement('date', wevYMD);
+    const input = createInputElement('date', wevRegexYMD);
 
     assignIValue(input, function(this: HTMLInputElement, value: TDate) {
         this.value = tDateToString(value, true, true) || '';
@@ -278,7 +292,7 @@ export const iyyyymmdd = (options?: IElementOptions) => {
 }
 
 export const iyyyymm = (options?: IElementOptions) => {
-    const input = createInputElement('month', wevYM);
+    const input = createInputElement('month', wevRegexYM);
 
     assignIValue(input, function(this: HTMLInputElement, value: TDate) {
         this.value = tDateToString(value, true) || '';
@@ -302,7 +316,7 @@ export const iyyyymm = (options?: IElementOptions) => {
 }
 
 export const ihhmm = (options?: IElementOptions) => {
-    const input = createInputElement('text', wevHM);
+    const input = createInputElement('text', wevRegexHM);
 
     assignIValue(input, function(this: HTMLInputElement, value: TTime) {
         this.value = <string>tTimeToString(value) || '';
@@ -335,13 +349,20 @@ export const inumber = (options?: IElementOptions) => {
     });
 
     let decimals = -1000000;
-    let wevNumber: string;
+    let wevRegexNumber: RegExp;
     let wtvRegexNumber: RegExp;
 
     const setDecimals = () => {
-        wevNumber = getWevNumber(decimals);
+        wevRegexNumber = getWevRegexNumber(decimals);
         wtvRegexNumber = getWtvRegexNumber(decimals);
-        input.setAttribute('pattern', wevNumber);
+    }
+
+    input.iIsNotValid = () => {
+        if (isRequired(input)) {
+            if (input.value === '') return 1; 
+        }
+        return wevRegexNumber.test(input.value) || 2;
+
     }
 
     const ao = getAttributesObserver(input);
@@ -375,7 +396,7 @@ export const inumber = (options?: IElementOptions) => {
 }
 
 export const itel = (options?: IElementOptions) => {
-    const input = createInputElement('tel', wevTel);
+    const input = createInputElement('tel', wevRegexTel);
 
     assignIValue(input, function(this: HTMLInputElement, value: string) {
         this.value = value || '';
@@ -398,7 +419,7 @@ export const itel = (options?: IElementOptions) => {
 }
 
 export const iemail = (options?: IElementOptions) => {
-    const input = createInputElement('email', wevEmail);
+    const input = createInputElement('email', wevRegexEmail);
 
     assignIValue(input, function(this: HTMLInputElement, value: string) {
         this.value = value || '';
@@ -416,7 +437,7 @@ export const iemail = (options?: IElementOptions) => {
 }
 
 export const itext = (options?: IElementOptions) => {
-    const input = createInputElement('text', wevText);
+    const input = createInputElement('text', wevRegexText);
 
     assignIValue(input, function(this: HTMLInputElement, value: string) {
         this.value = value || '';
@@ -439,7 +460,7 @@ export const itext = (options?: IElementOptions) => {
 }
 
 export const ipassword = (options?: IElementOptions) => {
-    const input = createInputElement('password', wevPassword);
+    const input = createInputElement('password', wevRegexPassword);
 
     assignIValue(input, function(this: HTMLInputElement, value: string) {
         this.value = value || '';
