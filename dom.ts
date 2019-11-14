@@ -249,12 +249,16 @@ const getWevRegexNumber = (decimals: number): RegExp => {
 
 const isRequired = (element: any) => element.irequire || (element.getAttribute && (element.getAttribute('require') || element.getAttribute('required'))) 
 
-const createInputElement = (type: string, regex?: RegExp) => {
+const createInputElement = (type: string = 'text') => {
     const input = <TsmInputElement>createElement('input');
     input.setAttribute('type', type)
+    return input;
+}
 
-    if (regex) {
+const setIsNotValidFunction = (input: any, regex: RegExp, correctionCallback?: () => void) => {
+    return () => {
         input.iIsNotValid = () => {
+            correctionCallback && correctionCallback();
             if (isRequired(input)) {
                 if (input.value === '') return 1;
                 if (!regex.test(input.value)) return 2;
@@ -263,13 +267,13 @@ const createInputElement = (type: string, regex?: RegExp) => {
             }
         }
     }
-    return input;
 }
 
 // ---------------------------------------------------------------------------------------------------------------------
 
 export const iyyyymmdd = (options?: IElementOptions) => {
-    const input = createInputElement('date', wevRegexYMD);
+    const input = createInputElement('date');
+    setIsNotValidFunction(input, wevRegexYMD, () => correctValue(true));
 
     assignIValue(input, function(this: HTMLInputElement, value: TDate) {
         this.value = tDateToString(value, true, true) || '';
@@ -293,7 +297,8 @@ export const iyyyymmdd = (options?: IElementOptions) => {
 }
 
 export const iyyyymm = (options?: IElementOptions) => {
-    const input = createInputElement('month', wevRegexYM);
+    const input = createInputElement('month');
+    setIsNotValidFunction(input, wevRegexYM, () => correctValue(true));
 
     assignIValue(input, function(this: HTMLInputElement, value: TDate) {
         this.value = tDateToString(value, true) || '';
@@ -317,7 +322,8 @@ export const iyyyymm = (options?: IElementOptions) => {
 }
 
 export const ihhmm = (options?: IElementOptions) => {
-    const input = createInputElement('text', wevRegexHM);
+    const input = createInputElement();
+    setIsNotValidFunction(input, wevRegexHM, () => correctValue(true));
 
     assignIValue(input, function(this: HTMLInputElement, value: TTime) {
         this.value = <string>tTimeToString(value) || '';
@@ -341,8 +347,8 @@ export const ihhmm = (options?: IElementOptions) => {
 }
 
 export const inumber = (options?: IElementOptions) => {
-    const input = createInputElement('text');
-
+    const input = createInputElement();
+    
     assignIValue(input, function(this: HTMLInputElement, value: number) {
         this.value = numberToString(value, decimals) || '';
     }, function(this: HTMLInputElement){
@@ -356,15 +362,7 @@ export const inumber = (options?: IElementOptions) => {
     const setDecimals = () => {
         wevRegexNumber = getWevRegexNumber(decimals);
         wtvRegexNumber = getWtvRegexNumber(decimals);
-    }
-
-    input.iIsNotValid = () => {
-        if (isRequired(input)) {
-            if (input.value === '') return 1;
-            if (!wevRegexNumber.test(input.value)) return 2;
-        } else if (input.value !== '' && !wevRegexNumber.test(input.value)) {
-            return 2;
-        }
+        setIsNotValidFunction(input, wevRegexNumber, () => correctValue(true));
     }
 
     const ao = getAttributesObserver(input);
@@ -381,8 +379,8 @@ export const inumber = (options?: IElementOptions) => {
 
     if (decimals <= -1000000) {
         decimals = -1;
-        setDecimals();
     }
+    setDecimals();
 
     const correctValue = runIfInactive(() => {
         const value = stringToNumber(input.value);
@@ -398,7 +396,8 @@ export const inumber = (options?: IElementOptions) => {
 }
 
 export const itel = (options?: IElementOptions) => {
-    const input = createInputElement('tel', wevRegexTel);
+    const input = createInputElement('tel');
+    setIsNotValidFunction(input, wevRegexTel, () => correctValue(true));
 
     assignIValue(input, function(this: HTMLInputElement, value: string) {
         this.value = value || '';
@@ -421,7 +420,8 @@ export const itel = (options?: IElementOptions) => {
 }
 
 export const iemail = (options?: IElementOptions) => {
-    const input = createInputElement('email', wevRegexEmail);
+    const input = createInputElement('email');
+    setIsNotValidFunction(input, wevRegexEmail);
 
     assignIValue(input, function(this: HTMLInputElement, value: string) {
         this.value = value || '';
@@ -439,7 +439,8 @@ export const iemail = (options?: IElementOptions) => {
 }
 
 export const itext = (options?: IElementOptions) => {
-    const input = createInputElement('text', wevRegexText);
+    const input = createInputElement();
+    setIsNotValidFunction(input, wevRegexText, () => correctValue(true));
 
     assignIValue(input, function(this: HTMLInputElement, value: string) {
         this.value = value || '';
@@ -462,7 +463,8 @@ export const itext = (options?: IElementOptions) => {
 }
 
 export const ipassword = (options?: IElementOptions) => {
-    const input = createInputElement('password', wevRegexPassword);
+    const input = createInputElement('password');
+    setIsNotValidFunction(input, wevRegexPassword);
 
     assignIValue(input, function(this: HTMLInputElement, value: string) {
         this.value = value || '';
