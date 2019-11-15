@@ -256,15 +256,13 @@ const createInputElement = (type: string = 'text') => {
 }
 
 const setIsNotValidFunction = (input: any, regex: RegExp, correctionCallback?: () => void) => {
-    return () => {
-        input.iIsNotValid = () => {
-            correctionCallback && correctionCallback();
-            if (isRequired(input)) {
-                if (input.value === '') return 1;
-                if (!regex.test(input.value)) return 2;
-            } else if (input.value !== '' && !regex.test(input.value)) {
-                return 2;
-            }
+    input.iIsNotValid = () => {
+        correctionCallback && correctionCallback();
+        if (isRequired(input)) {
+            if (input.value === '') return 1;
+            if (!regex.test(input.value)) return 2;
+        } else if (input.value !== '' && !regex.test(input.value)) {
+            return 2;
         }
     }
 }
@@ -800,8 +798,7 @@ export const areIValuesNotValid = (sourceRecord: any, callback?: (isNotValid: an
     const result: String[] = [];
     for (let name in sourceRecord) {
         const element = sourceRecord[name];
-        let isNotValid = element.iIsNotValid && element.iIsNotValid();;
-
+        const isNotValid = element.iIsNotValid && element.iIsNotValid();
         if (isNotValid)
             result.push(name);
 

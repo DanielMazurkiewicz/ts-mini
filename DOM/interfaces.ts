@@ -4,6 +4,9 @@ import { TTime, TDate } from "../dateTime";
 export interface TsmIsNotValid {
     iIsNotValid?: (...args: any) => any
 }
+export interface TsmIActiveAny {
+    iactive?: any,
+}
 export interface TsmIValueAny {
     ivalue?: any,
 }
@@ -16,7 +19,7 @@ export interface TsmIValueNumber extends TsmIValueAny{
 export interface TsmIValueBoolean extends TsmIValueAny{
     ivalue: boolean,
 }
-export interface TsmCommonBase extends TsmIValueAny, TsmIsNotValid {}
+export interface TsmCommonBase extends TsmIValueAny, TsmIsNotValid, TsmIActiveAny {}
 
 
 
