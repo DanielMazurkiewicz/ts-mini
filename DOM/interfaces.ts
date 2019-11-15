@@ -4,6 +4,10 @@ import { TTime, TDate } from "../dateTime";
 export interface TsmIsNotValid {
     iIsNotValid?: (...args: any) => any
 }
+export interface TsmIsNotValid_required {
+    iIsNotValid: (...args: any) => any
+}
+
 export interface TsmIActiveAny {
     iactive?: any,
 }

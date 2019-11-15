@@ -226,7 +226,7 @@ const wevRegexHMSM =     /^\d{2}:\d{2}:\d{2}[\.\,]\d{3}$/;
 const wevRegexTel =      /^([+])?(\d+\s){0,5}(\d+)$/;
 // const wevRegexEmail =    /^([\w\-\_]+\.)*([\w\-\_]+)@{1}([\w\-\_]+\.)+([\w\-\_]{2,})$/
 const wevRegexEmail =    /^((\w|[-_])+\.)*((\w|[-_])+)@((\w|[-_])+\.)+((\w|[-_]){2,})$/;
-const wevRegexText =     /^\S+(\\s\\S+)*$/;
+const wevRegexText =     /^\S+(\s\S+)*$/;
 const wevRegexPassword = /^.{6,}$/;
 
 // // when entered validators:
@@ -786,12 +786,6 @@ export const getIValues = (sourceRecord: any, resultBase: Record<any, any> = {})
         resultBase[name] = sourceRecord[name].ivalue;
     }
     return resultBase;
-}
-
-export const clearIValues = (sourceRecord: any) => {
-    for (let name in sourceRecord) {
-        sourceRecord[name].ivalue = sourceRecord[name].defaultIValue || '';
-    }
 }
 
 export const areIValuesNotValid = (sourceRecord: any, callback?: (isNotValid: any, name: string, element: TsmElement | TsmNode) => void) => {
