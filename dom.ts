@@ -106,7 +106,7 @@ export const removeChildren = (element: HTMLElement) => {
 export const getChildCausingEvent = (callback: (element: Node | undefined, zones: Node[]) => any) => function(this: Node, evt: Event) {
     let current = <Node>evt.target;
     let previous: Node | undefined = current;
-    let result: Node | undefined;
+    let result: Node | undefined = current;
     let zones: Node[] = [];
 
     while (this !== (current = <Node>current.parentNode)) {
@@ -229,17 +229,6 @@ const wevRegexEmail =    /^((\w|[-_])+\.)*((\w|[-_])+)@((\w|[-_])+\.)+((\w|[-_])
 const wevRegexText =     /^\S+(\s\S+)*$/;
 const wevRegexPassword = /^.{6,}$/;
 
-// // when entered validators:
-// const wevRegexYM = '\\d{4}-\\d{2}';
-// const wevRegexYMD = wevRegexYM + '-\\d{2}';
-// const wevRegexHM = '\\d{2}:\\d{2}';
-// const wevRegexHMS = wevRegexYM + ':\\d{2}';
-// const wevRegexHMSM = wevRegexHMS + '[\.\,]\\d{3}';
-// const wevRegexTel = `([+])?(\\d+\\s){0,5}(\\d+)`;
-// // const wevRegexEmail = /^([\w\-\_]+\.)*([\w\-\_]+)@{1}([\w\-\_]+\.)+([\w\-\_]{2,})$/
-// const wevRegexEmail = `((\\w|[-_])+\\.)*((\\w|[-_])+)@((\\w|[-_])+\\.)+((\\w|[-_]){2,})`;
-// const wevRegexText = `\\S+(\\s\\S+)*`;
-// const wevRegexPassword = `.{6,}`;
 
 const getWevRegexNumber = (decimals: number): RegExp => {
     if (decimals === 0) return /^([+-])?((\d+\s)*\d+)+$/
