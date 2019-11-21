@@ -165,6 +165,8 @@ const prepareFont = (tsStyles: ITSStyle[]) => {
     postCss(result);
 }
 
+export const getCssString = () => stylesRuleList;
+
 export const postCss = (style: string, name?: string) => {
     if (style) {
         stylesRuleList += style;
