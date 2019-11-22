@@ -103,7 +103,7 @@ export const removeChildren = (element: HTMLElement) => {
     }
 }
 
-export const getChildCausingEvent = (callback: (element: Node | undefined, zones: Node[]) => any) => function(this: Node, evt: Event) {
+export const getChildCausingEvent = (callback: (element: Node | undefined, zones: Node[], evt: Event) => any) => function(this: Node, evt: Event) {
     let current = <Node>evt.target;
     let previous: Node | undefined = current;
     let result: Node | undefined = current;
@@ -115,7 +115,7 @@ export const getChildCausingEvent = (callback: (element: Node | undefined, zones
         previous = current;
         result = previous;
     }
-    callback(result, zones);
+    callback(result, zones, evt);
 }
 
 // =====================================================================================================================
