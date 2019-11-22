@@ -109,7 +109,7 @@ export const getChildCausingEvent = (callback: (element: Node | undefined, zones
     let result: Node | undefined = current;
     let zones: Node[] = [];
 
-    while (this !== (current = <Node>current.parentNode)) {
+    while (this !== (current = <Node>current.parentNode) && current !== null) {
         // @ts-ignore
         if (previous.getAttribute && previous.getAttribute('eventszone')) zones.unshift(previous);
         previous = current;
