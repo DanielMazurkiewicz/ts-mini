@@ -1,0 +1,1 @@
+export default (element: Node, child: Node) => element.appendChild(child);

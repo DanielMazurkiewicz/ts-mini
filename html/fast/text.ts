@@ -1,0 +1,1 @@
+export default (data: string) => document.createTextNode(data);

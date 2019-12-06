@@ -1,0 +1,1 @@
+export default (s: number) => s ? s + 'rem' : '0';

@@ -1,0 +1,1 @@
+export default (evt: Event) => evt.stopPropagation();
