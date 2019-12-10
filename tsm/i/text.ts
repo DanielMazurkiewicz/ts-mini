@@ -8,7 +8,7 @@ import { runIfInactive } from '../../utils/debouncers';
 const whileTyping = /^(\S+(\s\S+)*\s?)?$/;
 const whenEntered = /^\S+(\s\S+)*$/;
 
-export default (attribs: any) => {
+export default (attribs?: any) => {
     const root = input();
     let isRequired: boolean;
     let min = 0;
