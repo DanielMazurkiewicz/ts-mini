@@ -1,5 +1,5 @@
 
-import { decorator } from '../utils/base'
+import decorator from '../utils/decorator'
 import './styles/select';
 import name from './names/select';
 

@@ -1,5 +1,5 @@
 
-import { decorator } from '../utils/base'
+import decorator from '../utils/decorator'
 import './styles/tbody';
 import name from './names/tbody';
 

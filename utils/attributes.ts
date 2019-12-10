@@ -1,4 +1,4 @@
-import { throwError } from "./base";
+import throwError from "./throwError";
 
 export const getAttributeDescriptor = (element: any, name: string) => element.$ && Object.getOwnPropertyDescriptor(element.$, name)
 

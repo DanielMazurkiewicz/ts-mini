@@ -1,0 +1,1 @@
+export default (errorCode: number) => {throw new Error(errorCode + '')}

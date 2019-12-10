@@ -1,7 +1,7 @@
 // export const media = 
 
 
-export * from '../utils/base';
+export * from '../utils/decorator';
 // export * from './tsm/basic';
 // import { onclick } from './DOM/events'
 

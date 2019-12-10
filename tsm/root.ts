@@ -1,3 +1,3 @@
 import './styles/root';
-import { decorator } from '../utils/base';
+import decorator from '../utils/decorator';
 export default (...children: any) => decorator(document.body, children);

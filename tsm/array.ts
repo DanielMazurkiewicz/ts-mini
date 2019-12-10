@@ -1,4 +1,4 @@
-import { decorator } from '../utils/base';
+import decorator from '../utils/decorator';
 import div from '../html/short/div'
 import '../html/styles/div'
 import prepareArray from './methods/prepareArray';

@@ -2,13 +2,9 @@ import text from '../html/text'
 import { getStyleName, IStyleId } from '../tss/tss';
 import { setAttribs } from './attributes';
 import appendChild from '../html/methods/appendChild'
+import throwError from './throwError'
 
-
-export const throwError = (errorCode: number) => {throw new Error(errorCode + '')}
-
-
-
-export const decorator = (element: Node | string, children: any[]) => {
+const decorator = (element: Node | string, children: any[]) => {
     if (typeof element === 'string') element = document.createElement(element);
     for(let i = 0; i < children.length; i++) {
         const child = children[i];
@@ -40,20 +36,4 @@ export const decorator = (element: Node | string, children: any[]) => {
 
 
 
-// STYLES
-
-
-export const useAsStyle = (alias: any, style: IStyleId) => {
-    alias.__tsm_sid = style.__tsm_sid
-    return alias;
-}
-
-export const styleAdd = (element: HTMLElement, styles: any[]) => {
-    element.classList.add(...styles.map(getStyleName));
-    return element;
-}
-
-export const styleRemove = (element: HTMLElement, styles: any[]) => {
-    element.classList.remove(...styles.map(getStyleName));
-    return element;
-}
+export default decorator;
