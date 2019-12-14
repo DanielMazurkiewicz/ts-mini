@@ -1,6 +1,6 @@
 import '../../html/styles/input';
 import input from '../../html/fast/input';
-import { attributes, setAttribs } from '../../utils/attributes'
+import { attributes, setAttribs, IAttributesObject } from '../../utils/attributes'
 import onvaluechange from '../../on/valuechange';
 import { runIfInactive } from '../../utils/debouncers';
 import { numberToString, stringToNumber } from '../../utils/number';
@@ -83,5 +83,5 @@ export default (attribs?: any) => {
 
 
     if (attribs) setAttribs(root, attribs);
-    return root;
+    return <IAttributesObject | HTMLInputElement> root;
 }

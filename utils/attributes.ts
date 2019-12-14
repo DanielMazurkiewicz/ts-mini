@@ -2,7 +2,6 @@ import throwError from "./throwError";
 
 export const getAttributeDescriptor = (element: any, name: string) => element.$ && Object.getOwnPropertyDescriptor(element.$, name)
 
-
 export const setAttribs = (element: any, attribs: Record<string, any>) => {
     if (!attribs) throwError(1);
 
