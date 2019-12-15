@@ -8,6 +8,17 @@ import { runIfInactive } from '../../utils/debouncers';
 const whileTyping = /^(\S+(\s\S+)*\s?)?$/;
 const whenEntered = /^\S+(\s\S+)*$/;
 
+interface IParameters {
+    value: number
+    isValid: boolean
+    isRequired: boolean
+    min: number
+}
+
+export interface IIText extends HTMLInputElement {
+    $: IParameters
+}
+
 export default (attribs?: any) => {
     const root = input();
     let isRequired: boolean;
@@ -46,5 +57,5 @@ export default (attribs?: any) => {
     })(root)
 
     if (attribs) setAttribs(root, attribs);
-    return <IAttributesObject | HTMLInputElement> root;
+    return <IIText> root;
 }

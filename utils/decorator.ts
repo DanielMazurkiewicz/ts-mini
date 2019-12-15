@@ -1,10 +1,10 @@
 import text from '../html/text'
-import { getStyleName, IStyleId } from '../tss/tss';
-import { setAttribs, IAttributesObject } from './attributes';
-import appendChild from '../html/methods/appendChild'
+import { getStyleName } from '../tss/tss';
+import { setAttribs } from './attributes';
+// import appendChild from '../html/methods/appendChild'
 import throwError from './throwError'
 
-const decorator = (element: Node | string | IAttributesObject, children: any[]) => {
+const decorator = (element: Node | string, children: any[]) => {
     if (typeof element === 'string') element = document.createElement(element);
     for(let i = 0; i < children.length; i++) {
         const child = children[i];
@@ -33,7 +33,5 @@ const decorator = (element: Node | string | IAttributesObject, children: any[]) 
     }
     return element;
 }
-
-
 
 export default decorator;

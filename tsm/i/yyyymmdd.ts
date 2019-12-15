@@ -7,10 +7,23 @@ import { runIfInactive } from '../../utils/debouncers';
 import { tDateToString, stringToTDate } from '../../utils/dateTime';
 
 const whileTyping = /^(\d{1,4}([\-](\d{0,2}([\-](\d{1,2})?)?)?)?)?$/;
+
 const whenEntered = /^\d{4}-\d{2}-\d{2}$/;
 
+interface IParameters {
+    value: number
+    isValid: boolean
+    isRequired: boolean
+    min: number
+    max: number
+}
+
+export interface IIYyyyMmDd extends HTMLInputElement {
+    $: IParameters
+}
+
 export default (attribs?: any) => {
-    const root = input('date');
+    const root = input();
     let isRequired: boolean;
     let min = Number.NEGATIVE_INFINITY;
     let max = Number.POSITIVE_INFINITY;
@@ -56,5 +69,5 @@ export default (attribs?: any) => {
 
 
     if (attribs) setAttribs(root, attribs);
-    return <IAttributesObject | HTMLInputElement> root;
+    return <IIYyyyMmDd> root;
 }

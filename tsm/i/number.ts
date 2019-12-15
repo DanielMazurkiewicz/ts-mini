@@ -1,6 +1,6 @@
 import '../../html/styles/input';
 import input from '../../html/fast/input';
-import { attributes, setAttribs, IAttributesObject } from '../../utils/attributes'
+import { attributes, setAttribs } from '../../utils/attributes'
 import onvaluechange from '../../on/valuechange';
 import { runIfInactive } from '../../utils/debouncers';
 import { numberToString, stringToNumber } from '../../utils/number';
@@ -19,6 +19,19 @@ const getWhileTyping = (decimals: number): RegExp => {
 const getWhenEntered = (decimals: number): RegExp => {
     if (decimals === 0) return /^([+-])?((\d+\s)*\d+)+$/
     return /^([+-])?((\d+\s)*\d+)+([\.,]\d+)?$/
+}
+
+interface IParameters {
+    value: number
+    isValid: boolean
+    isRequired: boolean
+    min: number
+    max: number
+    decimals: number
+}
+
+export interface IINumber extends HTMLInputElement {
+    $: IParameters
 }
 
 export default (attribs?: any) => {
@@ -83,5 +96,5 @@ export default (attribs?: any) => {
 
 
     if (attribs) setAttribs(root, attribs);
-    return <IAttributesObject | HTMLInputElement> root;
+    return <IINumber> root;
 }
