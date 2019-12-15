@@ -1,6 +1,6 @@
 import '../../html/styles/input';
 import input from '../../html/fast/input';
-import { attributes, setAttribs } from '../../utils/attributes'
+import { attributes, setAttribs, IAttributesTemplate } from '../../utils/attributes'
 import onvaluechange from '../../on/valuechange';
 import { runIfInactive } from '../../utils/debouncers';
 import { numberToString, stringToNumber } from '../../utils/number';
@@ -29,10 +29,8 @@ interface IParameters {
     max: number
     decimals: number
 }
+export interface IINumber extends HTMLInputElement, IAttributesTemplate<IParameters> {}
 
-export interface IINumber extends HTMLInputElement {
-    $: IParameters
-}
 
 export default (attribs?: any) => {
     const root = input();

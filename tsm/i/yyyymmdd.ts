@@ -1,6 +1,6 @@
 import '../../html/styles/input';
 import input from '../../html/fast/input';
-import { attributes, setAttribs, IAttributesObject } from '../../utils/attributes'
+import { attributes, setAttribs, IAttributesTemplate } from '../../utils/attributes'
 import onvaluechange from '../../on/valuechange';
 import { runIfInactive } from '../../utils/debouncers';
 
@@ -18,9 +18,8 @@ interface IParameters {
     max: number
 }
 
-export interface IIYyyyMmDd extends HTMLInputElement {
-    $: IParameters
-}
+
+export interface IIYyyyMmDd extends HTMLInputElement, IAttributesTemplate<IParameters> {}
 
 export default (attribs?: any) => {
     const root = input();

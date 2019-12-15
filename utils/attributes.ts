@@ -19,9 +19,13 @@ export const setAttribs = (element: any, attribs: Record<string, any>) => {
     }
     return element;
 }
-export interface IAttributesObject {
-    $: Record<string, any>
+
+export interface IAttributesTemplate <AttributesDefinition> {
+    $: AttributesDefinition
 }
+export type IAttributesObject = IAttributesTemplate<Record<string, any>>
+
+
 
 export const getAttributes = (element: any) => <Record<string, any>> element.$;
 
