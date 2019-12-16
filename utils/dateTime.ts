@@ -8,29 +8,38 @@ const date = new Date(0);
 export const tDateToDateTime = (input: TDate): TDateTime => input * fullDaysFactor;
 export const dateTimeToTDate = (input: TDateTime): TDate => input / fullDaysFactor;
 
-export const tDateTimeToString = (input: TDateTime, alsoMonth?: boolean, alsoDay?: boolean): string | undefined => {
+export const Year = 0;
+export const Month = 1;
+export const Day = 2;
+export const Hour = 3;
+export const Minute = 4;
+export const Second = 5;
+export const Milliecond = 6;
+
+
+export const tDateTimeToString = (input: TDateTime, also = Year): string | undefined => {
     if (isNaN(input)) return undefined;
     date.setTime(input);
     const year = date.getUTCFullYear().toString().padStart(4, '0');
-    if (!alsoMonth) return year;
+    if (also === Year) return year;
     const month = (date.getUTCMonth() + 1).toString().padStart(2, '0');
-    if (!alsoDay) return `${year}-${month}`;
+    if (also === Month) return `${year}-${month}`;
     const day = date.getUTCDate().toString().padStart(2, '0');
     return `${year}-${month}-${day}`;
 }
 
-export const tDateToString = (input: TDate, alsoMonth?: boolean, alsoDay?: boolean): string | undefined => {
+export const tDateToString = (input: TDate, also?: number): string | undefined => {
     if (isNaN(input)) return undefined;
-    return tDateTimeToString(tDateToDateTime(input), alsoMonth, alsoDay);
+    return tDateTimeToString(tDateToDateTime(input), also);
 }
 
-export const stringToTDateTime = (input: string, expectMonth?: boolean, expectDay?: boolean): TDate | undefined => {
+export const stringToTDateTime = (input: string, expect = Year): TDate | undefined => {
     if (!input) return undefined;
     const splitted = input.split('-').filter(s => s.trim());
 
-    if (expectDay && splitted.length < 3) 
+    if ((expect === Day) && (splitted.length < 3))
         return undefined;
-    else if (expectMonth && splitted.length < 2) 
+    else if ((expect === Month) && (splitted.length < 2))
         return undefined;
 
     const asNumbers = splitted.map(s => parseInt(s));
@@ -53,35 +62,35 @@ export const stringToTDateTime = (input: string, expectMonth?: boolean, expectDa
     return date.getTime();
 }
 
-export const stringToTDate = (input: string, expectMonth?: boolean, expectDay?: boolean): TDate | undefined => {
+export const stringToTDate = (input: string, expect?: number): TDate | undefined => {
     if (!input) return undefined;
-    const value = stringToTDateTime(input, expectMonth, expectDay);
+    const value = stringToTDateTime(input, expect);
     if (value === undefined) return undefined;
     return dateTimeToTDate(value)
 }
 
-export const tTimeToString = (input: TTime, alsoSeconds?: boolean, alsoMilliseconds?: boolean, separator = '.'): string | undefined => {
+export const tTimeToString = (input: TTime, also = Hour, separator = '.'): string | undefined => {
     if (isNaN(input)) return undefined;
     const date = new Date(input);
     const hours = date.getUTCHours().toString().padStart(2, '0');
     const minutes = date.getUTCMinutes().toString().padStart(2, '0');
     let result = `${hours}:${minutes}`;
-    if (!alsoSeconds) return result;
+    if (also === Minute) return result;
     const seconds = date.getUTCSeconds().toString().padStart(2, '0');
     result += `:${seconds}`;
-    if (!alsoMilliseconds) return result;
+    if (also === Second) return result;
     const milliseconds = date.getUTCMilliseconds().toString().padStart(3, '0');
     return `${result}${separator}${milliseconds}`;
 }
 
-export const stringToTTime = (input: string, expectSeconds?: boolean): TTime | undefined => {
+export const stringToTTime = (input: string, expect = Hour): TTime | undefined => {
     if (!input) return undefined;
     const splitted = input.split(':').filter(s => s.trim());
 
     if (splitted.length < 2) 
         return undefined;
 
-    if (expectSeconds && splitted.length < 3) 
+    if ((expect === Second) && (splitted.length < 3))
         return undefined;
 
     const asNumbers = splitted.map(s => parseInt(s));
