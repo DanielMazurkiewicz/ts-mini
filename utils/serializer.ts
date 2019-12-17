@@ -107,6 +107,7 @@ export default () => {
             }
         },
         begin: () => cursor = 0,
+        view: () => new DataView(arrayBuffer, 0, cursor)
     }
 
 }

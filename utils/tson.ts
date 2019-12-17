@@ -13,7 +13,8 @@ const {
     pushU32,
     pushU40,
     pushU48,
-    begin
+    begin,
+    view
 } = Serializer();
 
 const Nul = 0;
@@ -56,7 +57,8 @@ const isFloat32 = (num: number) => (isFloat32Buffer[0] = num) === num;
 
 const dictionary = Dictionary(2); // 0 and 1 are reserved for ObP and ObE
 
-export const toTSON = (object: any, globalDictionary = dictionary, localDictionary?: IDictionary) => {
+export const toTSON = (object: any, globalDictionary = dictionary, ld?: IDictionary) => {
+    let localDictionary = ld;
     if (!localDictionary) {
         localDictionary = Dictionary(globalDictionary.length());
         begin()
@@ -137,4 +139,5 @@ export const toTSON = (object: any, globalDictionary = dictionary, localDictiona
         }
         pushPB128(ObE);
     }
+    if (ld) return view()
 }
