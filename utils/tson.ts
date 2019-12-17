@@ -139,5 +139,5 @@ export const toTSON = (object: any, globalDictionary = dictionary, ld?: IDiction
         }
         pushPB128(ObE);
     }
-    if (ld) return view()
+    if (!ld) return view()
 }
