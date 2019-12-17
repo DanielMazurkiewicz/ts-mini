@@ -1,8 +1,8 @@
-import '../../../html/styles/input';
-import input from '../../../html/fast/input';
-import { attributes, setAttribs, IAttributesTemplate } from '../../../utils/attributes'
-import onvaluechange from '../../../on/valuechange';
-import { runIfInactive } from '../../../utils/debouncers';
+import '../../html/styles/textarea';
+import textarea from '../../html/fast/textarea';
+import { attributes, setAttribs, IAttributesTemplate } from '../../utils/attributes'
+import onvaluechange from '../../on/valuechange';
+import { runIfInactive } from '../../utils/debouncers';
 
 interface IParameters {
     value: number
@@ -12,28 +12,26 @@ interface IParameters {
     max: number
 }
 
-export interface IIText extends HTMLInputElement, IAttributesTemplate<IParameters> {}
+export interface IIArea extends HTMLTextAreaElement, IAttributesTemplate<IParameters> {}
 
-export default (whileTyping: RegExp, whenEntered: RegExp, type?: string, minLength = 0) => (attribs?: any) => {
-    const root = input(type);
+export default (attribs?: any) => {
+    const root = textarea();
     let isRequired: boolean;
-    let min = minLength;
+    let min = 0;
     let max = Number.POSITIVE_INFINITY;
     attributes((root: HTMLInputElement) => ({
         value: {
             set: (value: string) => {
                 root.value = value || '';
             },
-            get: () => autoCorrect(true) || undefined
+            get: () => root.value || undefined
         },
         isValid: {
             get: () => {
-                autoCorrect(true);
                 const value = root.value;
                 const length = value.length; 
                 return (isRequired === (!length)) &&
-                    (length >= min) && 
-                    whenEntered.test(value)
+                    (length >= min) && (length <= max)
             }
         },
         isRequired: {
@@ -48,14 +46,11 @@ export default (whileTyping: RegExp, whenEntered: RegExp, type?: string, minLeng
         }
     }))(root);
 
-    const autoCorrect = runIfInactive(() => root.value = root.value.trim(), 1000);
-
     onvaluechange(() => {
-        autoCorrect();
         const value = root.value;
-        return (value.length <= max) && whileTyping.test(value);
+        return (value.length <= max);
     })(root)
 
     if (attribs) setAttribs(root, attribs);
-    return <IIText> root;
+    return <IIArea> root;
 }
