@@ -1,4 +1,4 @@
-import { V32 } from './binValues'
+import { V32, V16 } from './binValues'
 
 
 export default () => {
@@ -48,10 +48,10 @@ export default () => {
         // Unsigned integer 24 bit
         pushU24: (value: number) => {
             const oldCursor = cursor;
-            cursor+=4;
+            cursor+=3;
             if (cursor >= bufferSize) extendBuffer()
-            cursor--;
-            buffer.setUint32(oldCursor, value);
+            buffer.setUint16(oldCursor, value);
+            buffer.setUint8(oldCursor + 2, value / V16);
         },
         
         // Unsigned integer 32 bit
@@ -68,7 +68,7 @@ export default () => {
             cursor+=5;
             if (cursor >= bufferSize) extendBuffer()
             buffer.setUint32(oldCursor, value);
-            buffer.setUint8(oldCursor, value / V32);
+            buffer.setUint8(oldCursor + 4, value / V32);
         },
         
         // Unsigned integer 48 bit
@@ -77,7 +77,7 @@ export default () => {
             cursor+=6;
             if (cursor >= bufferSize) extendBuffer()
             buffer.setUint32(oldCursor, value);
-            buffer.setUint16(oldCursor, value / V32);
+            buffer.setUint16(oldCursor + 4, value / V32);
         },
         
         
