@@ -1,1 +1,1 @@
-export default (errorCode: number) => {throw new Error(errorCode + '')}
+export default (errorCode: number, ...additionalInfo: any[]) => {throw new Error(JSON.stringify([errorCode, ...additionalInfo]))};

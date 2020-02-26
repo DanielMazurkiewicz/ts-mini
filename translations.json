@@ -1,0 +1,486 @@
+{
+    "default": "en",
+    "languages": [],
+    "list": {
+        "+kH4Z70SDq5jJS2Z": {
+            "lang": "en",
+            "val": "'Yes'",
+            "status": "new",
+            "list": {
+                "pl": {
+                    "val": "'Tak'"
+                }
+            }
+        },
+        "6chpuAxw4CDQtyUT": {
+            "lang": "en",
+            "val": "'No'",
+            "status": "new",
+            "list": {
+                "pl": {
+                    "val": "'Nie'"
+                }
+            }
+        },
+        "aUnNia1ofgZS3E1d": {
+            "lang": "en",
+            "val": "'Ok'",
+            "status": "new",
+            "list": {
+                "pl": {
+                    "val": "'Ok'"
+                }
+            }
+        },
+        "1uYuO8fuG8dbUYoq": {
+            "lang": "en",
+            "val": "'Cancel'",
+            "status": "new",
+            "list": {
+                "pl": {
+                    "val": "'Anuluj'"
+                }
+            }
+        },
+        "9LfHcIfB357mwnzT": {
+            "lang": "en",
+            "val": "'Scan'",
+            "status": "new",
+            "list": {
+                "pl": {
+                    "val": "'Skanuj'"
+                }
+            }
+        },
+        "8VdpgKZblOG4Za0G": {
+            "lang": "en",
+            "val": "'Open'",
+            "status": "new",
+            "list": {
+                "pl": {
+                    "val": "'Otwórz'"
+                }
+            }
+        },
+        "KRqnuqQ3WLAMeya7": {
+            "lang": "en",
+            "val": "'Close'",
+            "status": "new",
+            "list": {
+                "pl": {
+                    "val": "'Zamknij'"
+                }
+            }
+        },
+        "BcbzXJ/RW+fM5tP4": {
+            "lang": "en",
+            "val": "'Save'",
+            "status": "new",
+            "list": {
+                "pl": {
+                    "val": "'Zapisz'"
+                }
+            }
+        },
+        "924aa6vQZzmdRGYi": {
+            "lang": "en",
+            "val": "'Save as'",
+            "status": "new",
+            "list": {
+                "pl": {
+                    "val": "'Zapisz jako'"
+                }
+            }
+        },
+        "vLn8D4nYjkJtKiKR": {
+            "lang": "en",
+            "val": "'Exit'",
+            "status": "new",
+            "list": {
+                "pl": {
+                    "val": "'Wyjdź'"
+                }
+            }
+        },
+        "L1SIFqRmbc9EtdXU": {
+            "lang": "en",
+            "val": "'Edit'",
+            "status": "new",
+            "list": {
+                "pl": {
+                    "val": "'Edytuj'"
+                }
+            }
+        },
+        "Y5bCi3j3tlnEEDKx": {
+            "lang": "en",
+            "val": "'Error'",
+            "status": "new",
+            "list": {
+                "pl": {
+                    "val": "'Błąd'"
+                }
+            }
+        },
+        "oMq7Cc9kfqkjaUN4": {
+            "lang": "en",
+            "val": "'View'",
+            "status": "new",
+            "list": {
+                "pl": {
+                    "val": "'Widok'"
+                }
+            }
+        },
+        "qhY0l2MyxemFtf4M": {
+            "lang": "en",
+            "val": "'Help'",
+            "status": "new",
+            "list": {
+                "pl": {
+                    "val": "'Pomoc'"
+                }
+            }
+        },
+        "wudI9kcyysp0ae8r": {
+            "lang": "en",
+            "val": "'About'",
+            "status": "new",
+            "list": {
+                "pl": {
+                    "val": "'Informacje'"
+                }
+            }
+        },
+        "w1YQZQJSRgwTaEiz": {
+            "lang": "en",
+            "val": "'Add'",
+            "status": "new",
+            "list": {
+                "pl": {
+                    "val": "'Dodaj'"
+                }
+            }
+        },
+        "7MXvslFPtP4Ga74e": {
+            "lang": "en",
+            "val": "'Move'",
+            "status": "new",
+            "list": {
+                "pl": {
+                    "val": "'Przesuń'"
+                }
+            }
+        },
+        "w3091NxjYHQNPmKX": {
+            "lang": "en",
+            "val": "'Remove'",
+            "status": "new",
+            "list": {
+                "pl": {
+                    "val": "'Usuń'"
+                }
+            }
+        },
+        "icgS4oEJ5A9OppCi": {
+            "lang": "en",
+            "val": "'Delete'",
+            "status": "new",
+            "list": {
+                "pl": {
+                    "val": "'Usuń'"
+                }
+            }
+        },
+        "wNhv1mFk5W8rWI1G": {
+            "lang": "en",
+            "val": "'Clear'",
+            "status": "new",
+            "list": {
+                "pl": {
+                    "val": "'Wyczyść'"
+                }
+            }
+        },
+        "lwhGgBGPFrPcDDEF": {
+            "lang": "en",
+            "val": "'Copy'",
+            "status": "new",
+            "list": {
+                "pl": {
+                    "val": "'Kopiuj'"
+                }
+            }
+        },
+        "1pp2t3buRj0GmZR2": {
+            "lang": "en",
+            "val": "'Paste'",
+            "status": "new",
+            "list": {
+                "pl": {
+                    "val": "'Wklej'"
+                }
+            }
+        },
+        "ZpC5SSxGkkMJy9sI": {
+            "lang": "en",
+            "val": "'Confirm'",
+            "status": "new",
+            "list": {
+                "pl": {
+                    "val": "'Potwierdź'"
+                }
+            }
+        },
+        "wcGnrGeOjZR9hgwf": {
+            "lang": "en",
+            "val": "'Next'",
+            "status": "new",
+            "list": {
+                "pl": {
+                    "val": "'Następny'"
+                }
+            }
+        },
+        "I71Q78wYctVwqQyS": {
+            "lang": "en",
+            "val": "'Previous'",
+            "status": "new",
+            "list": {
+                "pl": {
+                    "val": "'Poprzedni'"
+                }
+            }
+        },
+        "lrkaG7uwZ7T+U2Qb": {
+            "lang": "en",
+            "val": "'Up'",
+            "status": "new",
+            "list": {
+                "pl": {
+                    "val": "'W górę'"
+                }
+            }
+        },
+        "1NRzw1JEHejgEJGL": {
+            "lang": "en",
+            "val": "'Down'",
+            "status": "new",
+            "list": {
+                "pl": {
+                    "val": "'W dół'"
+                }
+            }
+        },
+        "a9g3gBeXoGpKMM4n": {
+            "lang": "en",
+            "val": "'Left'",
+            "status": "new",
+            "list": {
+                "pl": {
+                    "val": "'W lewo'"
+                }
+            }
+        },
+        "KSD3vrqeouzbAYHA": {
+            "lang": "en",
+            "val": "'Right'",
+            "status": "new",
+            "list": {
+                "pl": {
+                    "val": "'W prawo'"
+                }
+            }
+        },
+        "Q4lFW9rUysniRUbk": {
+            "lang": "en",
+            "val": "'Select'",
+            "status": "new",
+            "list": {
+                "pl": {
+                    "val": "'Wybierz'"
+                }
+            }
+        },
+        "I39LolrvAnnqhMIh": {
+            "lang": "en",
+            "val": "'Print'",
+            "status": "new",
+            "list": {
+                "pl": {
+                    "val": "'Drukuj'"
+                }
+            }
+        },
+        "wsFqR9Q+3HgzzDsH": {
+            "lang": "en",
+            "val": "'Run'",
+            "status": "new",
+            "list": {
+                "pl": {
+                    "val": "'Uruchom'"
+                }
+            }
+        },
+        "SXKg+DS+n2KF02GF": {
+            "lang": "en",
+            "val": "'Preferences'",
+            "status": "new",
+            "list": {
+                "pl": {
+                    "val": "'Preferencje'"
+                }
+            }
+        },
+        "uMcH6WDQBhleBcUC": {
+            "lang": "en",
+            "val": "'Options'",
+            "status": "new",
+            "list": {
+                "pl": {
+                    "val": "'Opcje'"
+                }
+            }
+        },
+        "DrMntjcL4GSyfYfU": {
+            "lang": "en",
+            "val": "'Tools'",
+            "status": "new",
+            "list": {
+                "pl": {
+                    "val": "'Narzędzia'"
+                }
+            }
+        },
+        "xQjncCTzfHYnrKSW": {
+            "lang": "en",
+            "val": "'Find'",
+            "status": "new",
+            "list": {
+                "pl": {
+                    "val": "'Znajdź'"
+                }
+            }
+        },
+        "OsHNYO8obsWUCtNt": {
+            "lang": "en",
+            "val": "'Replace'",
+            "status": "new",
+            "list": {
+                "pl": {
+                    "val": "'Zastąp'"
+                }
+            }
+        },
+        "rfA7VvqzqifHFno2": {
+            "lang": "en",
+            "val": "'Configuration'",
+            "status": "new",
+            "list": {
+                "pl": {
+                    "val": "'Konfiguracja'"
+                }
+            }
+        },
+        "eXJJ17MKAHh9AFYB": {
+            "lang": "en",
+            "val": "'Top'",
+            "status": "new",
+            "list": {
+                "pl": {
+                    "val": "'Góra'"
+                }
+            }
+        },
+        "NPw+GdLsJipUVGb5": {
+            "lang": "en",
+            "val": "'Bottom'",
+            "status": "new",
+            "list": {
+                "pl": {
+                    "val": "'Dół'"
+                }
+            }
+        },
+        "tOmMPh7cY/3p584k": {
+            "lang": "en",
+            "val": "'Filter'",
+            "status": "new",
+            "list": {
+                "pl": {
+                    "val": "'Filtruj'"
+                }
+            }
+        },
+        "nXhAw+vczCjUl6vq": {
+            "lang": "en",
+            "val": "'Apply'",
+            "status": "new",
+            "list": {
+                "pl": {
+                    "val": "'Zastosuj'"
+                }
+            }
+        },
+        "PBKenasGqeiiFurh": {
+            "lang": "en",
+            "val": "'Settings'",
+            "status": "new",
+            "list": {
+                "pl": {
+                    "val": "'Ustawienia'"
+                }
+            }
+        },
+        "sh7hu7Aj/Pqzu/SF": {
+            "lang": "en",
+            "val": "'Begin'",
+            "status": "new",
+            "list": {
+                "pl": {
+                    "val": "'Początek'"
+                }
+            }
+        },
+        "ZtAQrcUXpEmUx9JU": {
+            "lang": "en",
+            "val": "'End'",
+            "status": "new",
+            "list": {
+                "pl": {
+                    "val": "'Koniec'"
+                }
+            }
+        },
+        "Lkm84+008vixOgfT": {
+            "lang": "en",
+            "val": "'File'",
+            "status": "new",
+            "list": {
+                "pl": {
+                    "val": "'Plik'"
+                }
+            }
+        },
+        "P5onkyAv8HknAek1": {
+            "lang": "en",
+            "val": "'Directory'",
+            "status": "new",
+            "list": {
+                "pl": {
+                    "val": "'Katalog'"
+                }
+            }
+        },
+        "tgAqEFNQLDKYSZg3": {
+            "lang": "en",
+            "val": "'Project'",
+            "status": "new",
+            "list": {
+                "pl": {
+                    "val": "'Projekt'"
+                }
+            }
+        }
+    }
+}

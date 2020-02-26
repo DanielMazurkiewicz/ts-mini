@@ -1,4 +1,4 @@
-import { V32, V16 } from './binValues'
+import { V32, V16 } from '../../utils/binValues'
 
 
 export default () => {
@@ -17,28 +17,28 @@ export default () => {
         buffer = new DataView(arrayBuffer);
     }
     
-    const pushU08 = (value: number) => {
+    const sU08 = (value: number) => {
         const oldCursor = cursor;
         cursor++;
         if (cursor >= bufferSize) extendBuffer()
         buffer.setUint8(oldCursor, value);
     }
 
-    const pushPB128 = (num: number) => {
+    const sPB128 = (num: number) => {
         do {
             let toStore = num & 127;
             num = Math.floor(num / 128);
-            pushU08(num ? toStore : toStore + 128);
+            sU08(num ? toStore : toStore + 128);
         } while (num)
     }
 
 
     return {
         // Unsigned integer 8 bit
-        pushU08,
+        sU08,
         
         // Unsigned integer 16 bit
-        pushU16: (value: number) => {
+        sU16: (value: number) => {
             const oldCursor = cursor;
             cursor+=2;
             if (cursor >= bufferSize) extendBuffer()
@@ -46,7 +46,7 @@ export default () => {
         },
         
         // Unsigned integer 24 bit
-        pushU24: (value: number) => {
+        sU24: (value: number) => {
             const oldCursor = cursor;
             cursor+=3;
             if (cursor >= bufferSize) extendBuffer()
@@ -55,7 +55,7 @@ export default () => {
         },
         
         // Unsigned integer 32 bit
-        pushU32: (value: number) => {
+        sU32: (value: number) => {
             const oldCursor = cursor;
             cursor+=4;
             if (cursor >= bufferSize) extendBuffer()
@@ -63,7 +63,7 @@ export default () => {
         },
         
         // Unsigned integer 40 bit
-        pushU40: (value: number) => {
+        sU40: (value: number) => {
             const oldCursor = cursor;
             cursor+=5;
             if (cursor >= bufferSize) extendBuffer()
@@ -72,7 +72,7 @@ export default () => {
         },
         
         // Unsigned integer 48 bit
-        pushU48: (value: number) => {
+        sU48: (value: number) => {
             const oldCursor = cursor;
             cursor+=6;
             if (cursor >= bufferSize) extendBuffer()
@@ -82,14 +82,14 @@ export default () => {
         
         
         // Float 32 bit
-        pushF32: (value: number) => {
+        sF32: (value: number) => {
             const oldCursor = cursor;
             cursor+=4;
             if (cursor >= bufferSize) extendBuffer()
             buffer.setFloat32(oldCursor, value);
         },
         
-        pushF64: (value: number) => {
+        sF64: (value: number) => {
             const oldCursor = cursor;
             cursor+=8;
             if (cursor >= bufferSize) extendBuffer()
@@ -97,17 +97,17 @@ export default () => {
         },
         
         // Unsigned integer base 128
-        pushPB128,
+        sPB128,
         
         // Utf string base 128
-        pushStr: (str: string) => {
-            pushPB128(str.length);
+        sStr: (str: string) => {
+            sPB128(str.length);
             for (let i = 0; i < str.length; i++) {
-                pushPB128(str.charCodeAt(i));
+                sPB128(str.charCodeAt(i));
             }
         },
-        begin: () => cursor = 0,
-        view: () => new DataView(arrayBuffer, 0, cursor)
+        sBegin: () => cursor = 0,
+        view: () => arrayBuffer && new DataView(arrayBuffer, 0, cursor)
     }
 
 }

@@ -1,9 +1,10 @@
 import throwError from "./throwError";
+import { ERROR_ATTRIBUTES_REQUIRED } from "../ERRORS";
 
 export const getAttributeDescriptor = (element: any, name: string) => element.$ && Object.getOwnPropertyDescriptor(element.$, name)
 
 export const setAttribs = (element: any, attribs: Record<string, any>) => {
-    if (!attribs) throwError(1);
+    if (!attribs) throwError(ERROR_ATTRIBUTES_REQUIRED);
 
     for (let name in attribs) {
         const value = attribs[name];

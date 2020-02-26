@@ -5,7 +5,7 @@ import onvaluechange from '../../../on/valuechange';
 import { runIfInactive } from '../../../utils/debouncers';
 
 interface IParameters {
-    value: number
+    value: string
     isValid: boolean
     isRequired: boolean
     min: number

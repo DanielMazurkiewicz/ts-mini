@@ -1,29 +1,26 @@
-export interface IDictionary {
-    add: (word: string) => number;
-    getId: (word: string) => number;
-    getWord: (id: number) => string;
-    exist: (word: string) => boolean;
+export interface IDictionary<KeyType> {
+    add: (key: KeyType) => number;
+    id: (key: KeyType) => number | undefined;
+    key: (id: number) => any;
     length: () => number;
 }
 
-export default (initialId: number = 0): IDictionary => {
-    const record: Record<string, number> = {}
-    const list: Array<string> = [];
+export default <KeyType>(initialId: number = 0): IDictionary<KeyType> => {
+    const map = new Map<any, number>();
+    const list: Array<KeyType> = [];
 
-    const exist = (word: string) => record[word] !== undefined;
-
-    const add = (word: string) => {
+    const add = (key: KeyType) => {
         const id = list.length + initialId;
-        list.push(word);
-        record[word] = id;
+        list.push(key);
+        map.set(key, id)
         return id;
     }
 
-    const getId = (word: string) => record[word];
-    const getWord = (id: number) => list[id - initialId];
+    const id = (key: KeyType) => map.get(key);
+    const key = (id: number) => list[id - initialId];
     const length = () => list.length
 
     return {
-        exist, add, getId, getWord, length
+        add, id, key, length
     } 
 }

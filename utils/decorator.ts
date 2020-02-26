@@ -3,6 +3,7 @@ import { getStyleName } from '../tss/tss';
 import { setAttribs } from './attributes';
 // import appendChild from '../html/methods/appendChild'
 import throwError from './throwError'
+import { ERROR_DECORATOR_UNKNOWN_CHILD } from '../ERRORS';
 
 const decorator = (element: Node | string, children: any[]) => {
     if (typeof element === 'string') element = document.createElement(element);
@@ -28,7 +29,7 @@ const decorator = (element: Node | string, children: any[]) => {
                 setAttribs(element, child);
             }
         } else {
-            throwError(2)
+            throwError(ERROR_DECORATOR_UNKNOWN_CHILD)
         }
     }
     return element;

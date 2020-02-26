@@ -1,26 +1,27 @@
-import { V32, V16 } from '../binValues'
-import throwError from '../throwError';
+import { V32, V16 } from '../../utils/binValues'
+import throwError from '../../utils/throwError';
+import { ERROR_DESERIALISER_GPB128_TOO_BIG } from '../../ERRORS';
 
 
 export default (buffer: DataView) => {
 
     let cursor = 0;
         
-    const unshiftU08 = () => buffer.getUint8(cursor++);
+    const gU08 = () => buffer.getUint8(cursor++);
     
 
-    const unshiftPB128 = () => {
+    const gPB128 = () => {
         let result = 0;
         let weight = 1;
         let u08: number;
         let safety = 0;
         do {
-            u08 = unshiftU08();
+            u08 = gU08();
             const value = u08 & 127;
             result += value * weight;
             weight *= 128;
             safety++;
-            if (safety > 10) throwError(2)
+            if (safety > 10) throwError(ERROR_DESERIALISER_GPB128_TOO_BIG)
         } while (u08 < 128)
 
         return result;
@@ -29,38 +30,38 @@ export default (buffer: DataView) => {
 
     return {
         // Unsigned integer 8 bit
-        unshiftU08,
+        gU08,
         
         // Unsigned integer 16 bit
-        unshiftU16: () => {
+        gU16: () => {
             const oldCursor = cursor;
             cursor+=2;
             return buffer.getUint16(oldCursor);
         },
         
         // Unsigned integer 24 bit
-        unshiftU24: () => {
+        gU24: () => {
             const oldCursor = cursor;
             cursor+=3;
-            return buffer.getUint16(oldCursor) + (buffer.getUint16(oldCursor + 2) * V16)
+            return buffer.getUint16(oldCursor) + (buffer.getUint8(oldCursor + 2) * V16)
         },
         
         // Unsigned integer 32 bit
-        unshiftU32: () => {
+        gU32: () => {
             const oldCursor = cursor;
             cursor+=4;
             return buffer.getUint32(oldCursor);
         },
         
         // Unsigned integer 40 bit
-        unshiftU40: () => {
+        gU40: () => {
             const oldCursor = cursor;
             cursor+=5;
             return buffer.getUint32(oldCursor) + (buffer.getUint8(oldCursor + 4) * V32)
         },
         
         // Unsigned integer 48 bit
-        unshiftU48: () => {
+        gU48: () => {
             const oldCursor = cursor;
             cursor+=6;
             return buffer.getUint32(oldCursor) + (buffer.getUint16(oldCursor + 4) * V32)
@@ -68,31 +69,31 @@ export default (buffer: DataView) => {
         
         
         // Float 32 bit
-        unshiftF32: () => {
+        gF32: () => {
             const oldCursor = cursor;
             cursor+=4;
             return buffer.getFloat32(oldCursor);
         },
         
-        unshiftF64: () => {
+        gF64: () => {
             const oldCursor = cursor;
             cursor+=8;
             return buffer.getFloat64(oldCursor);
         },
         
         // Unsigned integer base 128
-        unshiftPB128,
+        gPB128,
         
         // Utf string base 128
-        unshiftStr: () => {
-            const length = unshiftPB128();
+        gStr: () => {
+            const length = gPB128();
             const result = []
             for (let i = 0; i < length; i++) {
-                result.push(String.fromCharCode(unshiftPB128()));
+                result.push(String.fromCharCode(gPB128()));
             }
             return result.join('');
         },
-        unshiftBegin: (buf: DataView) => {
+        gBegin: (buf: DataView) => {
             cursor = 0;
             buffer = buf;
         }
