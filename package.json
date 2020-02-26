@@ -1,19 +1,27 @@
 {
   "name": "ts-mini",
-  "version": "1.0.52",
+  "version": "1.0.53",
   "description": "Pure Typescript framework",
   "devDependencies": {
-    "@types/node": "^12.7.7",
+    "@types/node": "^12.12.21",
+    "parcel": "^1.12.4",
+    "parcel-bundler": "^1.12.4",
+    "parcel-plugin-ts-mini": "^0.0.7",
     "tsc": "^1.20150623.0",
-    "typescript": "^3.6.4"
+    "typescript": "^3.8.2"
   },
   "scripts": {
     "bump": "yarn version --patch",
+    "compile": "parcel __internals/writeback.ts --out-dir __internals/tmp",
     "build:test": "parcel test/src/index.html --out-dir test/dst/dev",
     "build:test:mini": "parcel build --experimental-scope-hoisting test/src/index.html --out-dir test/dst/dev-mini"
   },
   "keywords": [],
   "author": "Daniel Mazurkiewicz <daniel.mazurkiewicz.dm@gmail.com>",
   "repository": "https://github.com/DanielMazurkiewicz/ts-mini.git",
-  "license": "MIT"
+  "license": "MIT",
+  "dependencies": {
+    "@types/ws": "^7.2.0",
+    "ws": "^7.2.1"
+  }
 }
