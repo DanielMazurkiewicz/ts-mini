@@ -1,6 +1,6 @@
 {
   "name": "ts-mini",
-  "version": "1.0.53",
+  "version": "1.0.54",
   "description": "Pure Typescript framework",
   "devDependencies": {
     "@types/node": "^12.12.21",
