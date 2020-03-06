@@ -1,4 +1,7 @@
-import prepareComponent  from './methods/prepareComponent';
-import style from './styles/noscroll'
+import { tss }from '../tss/tss'
+import div from '../html/div'
+import { TElementDivMethod } from '../tss/structures/TElementDivMethod'
 
-export default prepareComponent(style);
+export default <TElementDivMethod>tss({
+    overflow: `unset`
+}, div)

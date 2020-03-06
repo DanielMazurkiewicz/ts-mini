@@ -1,4 +1,4 @@
-import { IProperties } from '../tss/properties'
+import { IProperties } from '../tss/structures/IProperties'
 import { runIfInactive } from '../utils/debouncers';
 
 interface IOptions {

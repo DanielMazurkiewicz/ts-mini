@@ -122,9 +122,63 @@ parcelRequire = (function (modules, cache, entry, globalName) {
 
 Object.defineProperty(exports, "__esModule", {
   value: true
-}); // @tsm fixed: negative -22 ERROR_$COUNT
+}); // @tsm fixed: negative -24 ERROR_$COUNT
 
-exports.ERROR_$COUNT = -22, exports.ERROR_DECORATOR_UNKNOWN_CHILD = -1, exports.ERROR_ATTRIBUTES_REQUIRED = -2, exports.ERROR_DESERIALISER_GPB128_TOO_BIG = -3, exports.ERROR_TSON_IMPROPER_IDENTIFIER = -4, exports.ERROR_PREPARE_ARRAY_CREATOR_ALREADY_EXISTS = -5, exports.ERROR_PREPARE_ARRAY_SETTER_ALREADY_EXISTS = -6, exports.ERROR_PREPARE_ARRAY_GETTER_ALREADY_EXISTS = -7, exports.ERROR_PREPARE_ARRAY_CANT_REMOVE_NOT_A_CHILD = -8, exports.ERROR_FE_CREATE_WEBSOCKET_IMPROPER_PUSHPOINTID = -9, exports.ERROR_FE_CREATE_WEBSOCKET_STATUS_CHANGE_ALREADY_EXIST = -10, exports.ERROR_FE_CREATE_WEBSOCKET_STAGE_CHANGE_ALREADY_EXIST = -11, exports.ERROR_FE_CREATE_WEBSOCKET_REQRES_TIMEOUT = -12, exports.ERROR_BE_CREATE_WEBSOCKET_ON_CONNECTION_ALREADY_EXIST = -13, exports.ERROR_BE_CREATE_WEBSOCKET_ON_CLOSE_ALREADY_EXIST = -14, exports.ERROR_BE_CREATE_WEBSOCKET_ON_ERROR_ALREADY_EXIST = -15, exports.ERROR_BE_CREATE_WEBSOCKET_IMPROPER_PUSHPOINTID = -16, exports.ERROR_BE_CREATE_WEBSOCKET_WEBSOCKET_PROBLEM = -17, exports.ERROR_BE_CREATE_WEBSOCKET_INVALID_TSON = -18, exports.ERROR_BE_CREATE_WEBSOCKET_IMPROPER_REQUEST_FORMAT = -19, exports.ERROR_BE_CREATE_WEBSOCKET_NON_EXISTING_ENDPOINT = -20, exports.ERROR_BE_CREATE_WEBSOCKET_INVALID_MESSAGE_DATA = -21;
+exports.ERROR_$COUNT = -24, exports.ERROR_DECORATOR_UNKNOWN_CHILD = -1, exports.ERROR_ATTRIBUTES_REQUIRED = -2, exports.ERROR_DESERIALISER_GPB128_TOO_BIG = -3, exports.ERROR_TSON_IMPROPER_IDENTIFIER = -4, exports.ERROR_PREPARE_ARRAY_CREATOR_ALREADY_EXISTS = -5, exports.ERROR_PREPARE_ARRAY_SETTER_ALREADY_EXISTS = -6, exports.ERROR_PREPARE_ARRAY_GETTER_ALREADY_EXISTS = -7, exports.ERROR_PREPARE_ARRAY_CANT_REMOVE_NOT_A_CHILD = -8, exports.ERROR_FE_CREATE_WEBSOCKET_IMPROPER_PUSHPOINTID = -9, exports.ERROR_FE_CREATE_WEBSOCKET_STATUS_CHANGE_ALREADY_EXIST = -10, exports.ERROR_FE_CREATE_WEBSOCKET_STAGE_CHANGE_ALREADY_EXIST = -11, exports.ERROR_FE_CREATE_WEBSOCKET_REQRES_TIMEOUT = -12, exports.ERROR_BE_CREATE_WEBSOCKET_ON_CONNECTION_ALREADY_EXIST = -13, exports.ERROR_BE_CREATE_WEBSOCKET_ON_CLOSE_ALREADY_EXIST = -14, exports.ERROR_BE_CREATE_WEBSOCKET_ON_ERROR_ALREADY_EXIST = -15, exports.ERROR_BE_CREATE_WEBSOCKET_IMPROPER_PUSHPOINTID = -16, exports.ERROR_BE_CREATE_WEBSOCKET_WEBSOCKET_PROBLEM = -17, exports.ERROR_BE_CREATE_WEBSOCKET_INVALID_TSON = -18, exports.ERROR_BE_CREATE_WEBSOCKET_IMPROPER_REQUEST_FORMAT = -19, exports.ERROR_BE_CREATE_WEBSOCKET_NON_EXISTING_ENDPOINT = -20, exports.ERROR_BE_CREATE_WEBSOCKET_INVALID_MESSAGE_DATA = -21, exports.ERROR_BE_CREATE_WEBSOCKET_ENDPOINT_FAILED = -22, exports.ERROR_BE_CREATE_WEBSOCKET_RESPONSE_FAILED = -23;
+},{}],"../words.ts":[function(require,module,exports) {
+"use strict";
+
+Object.defineProperty(exports, "__esModule", {
+  value: true
+});
+exports.yes = 'Yes';
+exports.no = 'No';
+exports.ok = 'Ok';
+exports.cancel = 'Cancel';
+exports.scan = 'Scan';
+exports.open = 'Open';
+exports.close = 'Close';
+exports.save = 'Save';
+exports.saveAs = 'Save as';
+exports.exit = 'Exit';
+exports.edit = 'Edit';
+exports.error = 'Error';
+exports.view = 'View';
+exports.help = 'Help';
+exports.about = 'About';
+exports.add = 'Add';
+exports.move = 'Move';
+exports.remove = 'Remove';
+exports.del = 'Delete';
+exports.clear = 'Clear';
+exports.copy = 'Copy';
+exports.paste = 'Paste';
+exports.confirm = 'Confirm';
+exports.next = 'Next';
+exports.previous = 'Previous';
+exports.up = 'Up';
+exports.down = 'Down';
+exports.left = 'Left';
+exports.right = 'Right';
+exports.top = '\i44dAWr2fVJ1/j3xA:Top';
+exports.bottom = '\iXHghYJLMlBzuxSki:Bottom';
+exports.select = 'Select';
+exports.print = 'Print';
+exports.run = 'Run';
+exports.pref = 'Preferences';
+exports.options = 'Options';
+exports.tools = 'Tools';
+exports.find = 'Find';
+exports.filter = 'Filter';
+exports.replace = 'Replace';
+exports.config = 'Configuration';
+exports.apply = 'Apply';
+exports.settings = 'Settings';
+exports.begin = 'Begin';
+exports.end = 'End';
+exports.file = 'File';
+exports.directory = 'Directory';
+exports.project = 'Project';
 },{}],"writeback.ts":[function(require,module,exports) {
 "use strict";
 
@@ -133,7 +187,9 @@ Object.defineProperty(exports, "__esModule", {
 });
 
 require("../ERRORS");
-},{"../ERRORS":"../ERRORS.ts"}],"../node_modules/parcel-bundler/src/builtins/hmr-runtime.js":[function(require,module,exports) {
+
+require("../words");
+},{"../ERRORS":"../ERRORS.ts","../words":"../words.ts"}],"../node_modules/parcel-bundler/src/builtins/hmr-runtime.js":[function(require,module,exports) {
 var global = arguments[3];
 var OVERLAY_ID = '__parcel__error__overlay__';
 var OldModule = module.bundle.Module;
@@ -161,7 +217,7 @@ var parent = module.bundle.parent;
 if ((!parent || !parent.isParcelRequire) && typeof WebSocket !== 'undefined') {
   var hostname = "" || location.hostname;
   var protocol = location.protocol === 'https:' ? 'wss' : 'ws';
-  var ws = new WebSocket(protocol + '://' + hostname + ':' + "36173" + '/');
+  var ws = new WebSocket(protocol + '://' + hostname + ':' + "43903" + '/');
 
   ws.onmessage = function (event) {
     checkedAssets = {};

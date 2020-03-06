@@ -1,0 +1,1 @@
+export default (width: number) => `(max-width: ${width}rem)`

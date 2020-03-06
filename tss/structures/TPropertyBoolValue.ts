@@ -1,0 +1,1 @@
+export type TPropertyBoolValue = boolean | number

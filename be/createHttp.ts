@@ -4,13 +4,17 @@ import * as https from 'https';
 
 export interface IConnectionOptions {
     secured?: boolean;
+    cert?: string;
+    key?: string;
 }
 
 export default (port: number, options: IConnectionOptions = {}) => {
     if (options.secured) {
         const srv = https.createServer({
-            cert: fs.readFileSync('/path/to/cert.pem'),
-            key: fs.readFileSync('/path/to/key.pem')
+            // @ts-ignore
+            cert: fs.readFileSync(options.cert), // '/path/to/cert.pem'
+            // @ts-ignore
+            key: fs.readFileSync(options.key)    // '/path/to/key.pem'
         });
         srv.listen(port);
         return srv;

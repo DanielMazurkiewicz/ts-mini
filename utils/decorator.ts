@@ -1,9 +1,9 @@
 import text from '../html/text'
-import { getStyleName } from '../tss/tss';
 import { setAttribs } from './attributes';
 // import appendChild from '../html/methods/appendChild'
 import throwError from './throwError'
 import { ERROR_DECORATOR_UNKNOWN_CHILD } from '../ERRORS';
+import getStyleName from '../tss/methods/getStyleName';
 
 const decorator = (element: Node | string, children: any[]) => {
     if (typeof element === 'string') element = document.createElement(element);

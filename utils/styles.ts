@@ -1,12 +1,6 @@
-import { getStyleName, IStyleId } from '../tss/tss';
+import getStyleName from "../tss/methods/getStyleName";
 
 // STYLES
-
-
-export const useAsStyle = (alias: any, style: IStyleId) => {
-    alias.__tsm_sid = style.__tsm_sid
-    return alias;
-}
 
 export const styleAdd = (element: HTMLElement, styles: any[]) => {
     element.classList.add(...styles.map(getStyleName));

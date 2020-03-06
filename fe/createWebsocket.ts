@@ -66,7 +66,7 @@ export default (url: string, options: IConnectionOptions = {}) => {
             }
 
             if (connectionStatus !== CONNECTION_STATUS__NOT_CONNECTED) {
-                connectionStatus = CONNECTION_STATUS__NOT_CONNECTED
+                connectionStatus = CONNECTION_STATUS__NOT_CONNECTED;
                 if (onstatuschange) onstatuschange(connectionStatus, ws, event);
             }
         }

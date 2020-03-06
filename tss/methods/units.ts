@@ -1,0 +1,1 @@
+export default (units: string) => (s: number | string) => (typeof s === 'string') ? s : (s ? s + units : '0');

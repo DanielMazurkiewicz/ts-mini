@@ -15,7 +15,9 @@ import {
     ERROR_BE_CREATE_WEBSOCKET_INVALID_TSON,
     ERROR_BE_CREATE_WEBSOCKET_IMPROPER_REQUEST_FORMAT,
     ERROR_BE_CREATE_WEBSOCKET_NON_EXISTING_ENDPOINT,
-    ERROR_BE_CREATE_WEBSOCKET_INVALID_MESSAGE_DATA
+    ERROR_BE_CREATE_WEBSOCKET_INVALID_MESSAGE_DATA,
+    ERROR_BE_CREATE_WEBSOCKET_ENDPOINT_FAILED,
+    ERROR_BE_CREATE_WEBSOCKET_RESPONSE_FAILED
 
 } from '../ERRORS';
 
@@ -52,15 +54,13 @@ Communication protocols:
 export default (port: number, options: IConnectionOptions = {}) => {
     const server = createHttp(port, options)
     const wss = new WebSocket.Server({ server });
-
-    console.log('Websocket up and running');
     
     const endpoints: Endpoints = new Map();
     const tson = Tson();
 
     let onconnection: (session: ISession, request: IncomingMessage) => void;
     let onerror: (session: ISession, errorCode: number, details: any[]) => void;
-    let onclose: (session: ISession) => void;
+    let onclose: (session: ISession, code: number, reason: string) => void;
 
     const reportError = (session: ISession, errorCode: number, ...details: any[]) => {
         if (onerror) {
@@ -77,14 +77,10 @@ export default (port: number, options: IConnectionOptions = {}) => {
 
         if (onconnection) onconnection(session, request);
 
-        ws.on('open', () => {
-            console.log('Opened')
-        })
         ws.on('close', (code, reason) => {
-            console.log('Closed')
+            if (onclose) onclose(session, code, reason)
         })
         ws.on('error', (error) => {
-            console.log('Error', error)
             reportError(session, ERROR_BE_CREATE_WEBSOCKET_WEBSOCKET_PROBLEM, error);
         })
 
@@ -104,7 +100,6 @@ export default (port: number, options: IConnectionOptions = {}) => {
                 return;
             }
 
-            console.log('JSON', json)
             if (!(json instanceof Array)) {
                 reportError(session, ERROR_BE_CREATE_WEBSOCKET_IMPROPER_REQUEST_FORMAT, json);
                 return;
@@ -119,21 +114,49 @@ export default (port: number, options: IConnectionOptions = {}) => {
             const [isBroadcast, endpoint] = endpointDescriptor;
             if (isBroadcast) {
                 json.unshift(session);
-                // TODO: figure out what is wrong with that
-                // @ts-ignore
-                endpoint.apply(undefined, json);
+
+                try {
+                    // @ts-ignore
+                    endpoint.apply(undefined, json);
+                } catch (e) {
+                    reportError(session, ERROR_BE_CREATE_WEBSOCKET_ENDPOINT_FAILED, endpointId, json);
+                    return;
+                }
             } else {
                 const returnId = json[0];
                 json[0] = session;
-                // TODO: figure out what is wrong with that
-                // @ts-ignore
-                const responseData = endpoint.apply(undefined, json);
-                const responseMessage = [returnId, responseData];
-                if (session.errorCode !== undefined) {
-                    responseMessage.push(session.errorCode);
-                    delete session.errorCode;
+
+                let response: any;
+                try {
+                    // @ts-ignore
+                    response = endpoint.apply(undefined, json);
+                } catch (e) {
+                    reportError(session, ERROR_BE_CREATE_WEBSOCKET_ENDPOINT_FAILED, endpointId, json);
+                    return;
                 }
-                ws.send(tson.make(responseMessage));
+
+                const respond = (responseData: any) => {
+                    const responseMessage = [returnId, responseData];
+                    if (session.errorCode !== undefined) {
+                        responseMessage.push(session.errorCode);
+                        delete session.errorCode;
+                    }
+                    ws.send(tson.make(responseMessage));
+                }
+
+                if (response instanceof Promise) {
+                    response
+                    .then(respond)
+                    .catch((reason) => {
+                        reportError(session, ERROR_BE_CREATE_WEBSOCKET_RESPONSE_FAILED, endpointId, returnId, json, reason);
+                    })
+                } else {
+                    try {
+                        respond(response);    
+                    } catch (e) {
+                        reportError(session, ERROR_BE_CREATE_WEBSOCKET_RESPONSE_FAILED, endpointId, returnId, json, e, response);
+                    }
+                }
             }
         });
     });
@@ -148,7 +171,7 @@ export default (port: number, options: IConnectionOptions = {}) => {
             return me;
         },
 
-        onclose: (callback: (session: ISession) => void) => {
+        onclose: (callback: (session: ISession, code: number, reason: string) => void) => {
             // @ts-ignore
             if (onclose) {
                 throwError(ERROR_BE_CREATE_WEBSOCKET_ON_CLOSE_ALREADY_EXIST);
